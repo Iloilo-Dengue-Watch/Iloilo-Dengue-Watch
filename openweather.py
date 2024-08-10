@@ -1,11 +1,12 @@
 from dotenv import load_dotenv
 import os
 import requests
-
+from utils import convert_single_to_double_quotes
 # Load environment variables from .env file
 load_dotenv()
 
 API_KEY = os.getenv("OPENWEATHER_API_KEY")
+
 
 def get_weather_data(unix_time, lat="10.72015", long="122.562106"):
     """
@@ -22,8 +23,12 @@ def get_weather_data(unix_time, lat="10.72015", long="122.562106"):
     url = f"https://api.openweathermap.org/data/3.0/onecall/timemachine?lat={lat}&lon={long}&dt={unix_time}&appid={API_KEY}"
     response = requests.get(url).json()
     print(response)
+    if response['cod'] != 200:
+        convert_single_to_double_quotes("weather_data.jsonl")
+        raise Exception(f"Error: {response['message']}")
     data = response['data'][0]
     return data
+
 
 def weather_to_jsonl(unix_time):
     """
@@ -39,6 +44,7 @@ def weather_to_jsonl(unix_time):
     print(weather_data)
     with open("weather_data.jsonl", "a") as file:
         file.write(str(weather_data) + "\n")
+
 
 def main():
     """
@@ -57,7 +63,7 @@ def main():
     Returns:
         None
     """
-    last_datetime = 1293811200 # 1st January 2011
+    last_datetime = 1293811200  # 1st January 2011
     try:
         with open("weather_data.jsonl", "r") as file:
             # check the last row and datetime
@@ -69,7 +75,7 @@ def main():
         with open("weather_data.jsonl", "w") as file:
             pass
     for i in range(last_datetime, 1635609600, 86400):
-
         weather_to_jsonl(i)
+
 
 main()
