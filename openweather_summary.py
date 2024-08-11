@@ -2,13 +2,14 @@ from dotenv import load_dotenv
 import os
 import requests
 from utils import convert_single_to_double_quotes
+from datetime import datetime
 # Load environment variables from .env file
 load_dotenv()
 
 API_KEY = os.getenv("OPENWEATHER_API_KEY")
 
 
-def get_weather_data(unix_time, lat="10.72015", long="122.562106"):
+def get_weather_data(date_time, lat="10.72015", long="122.562106"):
     """
     Retrieves historical weather data from the OpenWeatherMap API.
 
@@ -20,61 +21,48 @@ def get_weather_data(unix_time, lat="10.72015", long="122.562106"):
     Returns:
         dict: The JSON response from the OpenWeatherMap API containing the historical weather data.
     """
-    url = f"https://api.openweathermap.org/data/3.0/onecall/timemachine?lat={lat}&lon={long}&dt={unix_time}&appid={API_KEY}"
+    url = f"https://api.openweathermap.org/data/3.0/onecall/day_summary?lat={lat}&lon={long}&date={date_time}&appid={API_KEY}"
     response = requests.get(url).json()
     print(response)
     if 'cod' in response.keys():
-        convert_single_to_double_quotes("weather_data.jsonl")
+        convert_single_to_double_quotes("weather_data_summary.jsonl")
         raise Exception(f"Error: {response['message']}")
-    data = response['data'][0]
-    return data
+    return response
 
 
-def weather_to_jsonl(unix_time):
-    """
-    Converts the weather data retrieved from the OpenWeatherMap API into a JSONL format and saves it to a file.
+def weather_to_jsonl(date_time):
 
-    Args:
-        unix_time (int): The Unix timestamp representing the date and time for which the weather data is retrieved.
-
-    Returns:
-        None
-    """
-    weather_data = get_weather_data(unix_time)
-    with open("weather_data.jsonl", "a") as file:
+    weather_data = get_weather_data(date_time)
+    with open("weather_data_summary.jsonl", "a") as file:
         file.write(str(weather_data) + "\n")
 
 
 def main():
     """
-    The main function that controls the flow of the program.
-
-    It starts by initializing the last datetime to January 1st, 2011.
-    It then attempts to open the weather_data.jsonl file and read the last line to get the last datetime.
-    If the file does not exist, it creates a new file.
-
-    After that, it loops through each day from the last datetime to a specified end datetime,
-    calling the weather_to_jsonl function for each day.
+    The main function of the script. It retrieves historical weather data from the OpenWeatherMap API,
+    converts it into a JSONL format, and saves it to a file. If the file does not exist, it creates it.
 
     Parameters:
-        None
+    None
 
     Returns:
-        None
+    None
     """
+    
     last_datetime = 1293811200  # 1st January 2011
     try:
-        with open("weather_data.jsonl", "r") as file:
+        with open("weather_data_summary.jsonl", "r") as file:
             # check the last row and datetime
             last_line = file.readlines()[-1]
             last_line_dict = eval(last_line)
             last_datetime = last_line_dict["dt"]
     except FileNotFoundError:
         #create the file if it doesn't exist
-        with open("weather_data.jsonl", "w") as file:
+        with open("weather_data_summary.jsonl", "w") as file:
             pass
     for i in range(last_datetime, 1635609600, 86400):
-        weather_to_jsonl(i)
+        date = datetime.utcfromtimestamp(i).strftime('%Y-%m-%d')
+        weather_to_jsonl(date)
 
 
 main()

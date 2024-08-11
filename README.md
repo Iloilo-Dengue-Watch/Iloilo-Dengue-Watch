@@ -8,7 +8,14 @@ This repository is a project submitted to the [AI4GHI Challenge 2024](https://do
 
 ## Project
 The project is all about trying to integrate AI into predicting mosquito-borne disease **Dengue** in Iloilo City, Philippines.
+### Why only a specific place?
+Due to the lack of time and data, we decided to focus on a specific place to make sure that we can provide a good model for the specific place. We chose Iloilo City because it is a place where we are familiar with.
 
+## Objective
+
+## Methodology
+
+## End Product
 
 ## Data
 ### For Dengue
