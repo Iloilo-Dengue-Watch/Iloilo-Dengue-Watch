@@ -55,7 +55,9 @@ def main():
             # check the last row and datetime
             last_line = file.readlines()[-1]
             last_line_dict = eval(last_line)
-            last_datetime = last_line_dict["dt"]
+            last_datetime = last_line_dict["date"]
+            last_datetime = int(datetime.strptime(last_datetime, "%Y-%m-%d").timestamp())
+            print(last_datetime)
     except FileNotFoundError:
         #create the file if it doesn't exist
         with open("weather_data_summary.jsonl", "w") as file:
