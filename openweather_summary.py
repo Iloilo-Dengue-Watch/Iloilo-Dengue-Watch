@@ -50,6 +50,7 @@ def main():
     """
     
     last_datetime = 1293811200  # 1st January 2011
+    now_datetime = int(datetime.now().timestamp())
     try:
         with open("weather_data_summary.jsonl", "r") as file:
             # check the last row and datetime
@@ -62,7 +63,8 @@ def main():
         #create the file if it doesn't exist
         with open("weather_data_summary.jsonl", "w") as file:
             pass
-    for i in range(last_datetime, 1635609600, 86400):
+
+    for i in range(last_datetime, now_datetime, 86400):
         date = datetime.utcfromtimestamp(i).strftime('%Y-%m-%d')
         weather_to_jsonl(date)
 

@@ -26,7 +26,10 @@ def clean_openweather_data(file_path: str) -> bool:
             temp = round(data['temp'] - 273.15, 2)  # convert temperature from Kelvin to Celsius
             pressure = data['pressure']
             humidity = data['humidity']
-            rain = data.get('rain', 0)['1h'] if 'rain' in data.keys() else 0
+            try:
+                rain = data.get('rain', 0)['1h'] if 'rain' in data.keys() else 0
+            except KeyError:
+                rain = 0
             with open('data/openweather/weather_data.csv', 'a') as file2:
                 file2.write(f"{dt},{temp},{pressure},{humidity},{rain}\n")
     print(f"Cleaned weather data saved to 'data/openweather/weather_data.csv'")
