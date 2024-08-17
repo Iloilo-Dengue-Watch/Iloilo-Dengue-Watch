@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import os
 import requests
 from utils import convert_single_to_double_quotes
+import datetime
 # Load environment variables from .env file
 load_dotenv()
 
@@ -63,6 +64,7 @@ def main():
         None
     """
     last_datetime = 1293811200  # 1st January 2011
+    date_time_now = int(datetime.datetime.now().timestamp())
     try:
         with open("weather_data.jsonl", "r") as file:
             # check the last row and datetime
@@ -73,7 +75,7 @@ def main():
         #create the file if it doesn't exist
         with open("weather_data.jsonl", "w") as file:
             pass
-    for i in range(last_datetime, 1635609600, 86400):
+    for i in range(last_datetime, date_time_now, 86400):
         weather_to_jsonl(i)
 
 
