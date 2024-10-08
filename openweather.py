@@ -3,6 +3,7 @@ import os
 import requests
 from utils import convert_single_to_double_quotes
 import datetime
+import pytz
 # Load environment variables from .env file
 load_dotenv()
 
@@ -25,7 +26,7 @@ def get_weather_data(unix_time, lat="10.72015", long="122.562106"):
     response = requests.get(url).json()
     print(response)
     if 'cod' in response.keys():
-        convert_single_to_double_quotes("weather_data.jsonl")
+        convert_single_to_double_quotes("weather_data_new.jsonl")
         raise Exception(f"Error: {response['message']}")
     data = response['data'][0]
     return data
@@ -42,7 +43,7 @@ def weather_to_jsonl(unix_time):
         None
     """
     weather_data = get_weather_data(unix_time)
-    with open("weather_data.jsonl", "a") as file:
+    with open("weather_data_new.jsonl", "a") as file:
         file.write(str(weather_data) + "\n")
 
 
@@ -63,17 +64,19 @@ def main():
     Returns:
         None
     """
-    last_datetime = 1293811200  # 1st January 2011
-    date_time_now = int(datetime.datetime.now().timestamp())
+    manila_tz = pytz.timezone("Asia/Manila")
+    manila_time = manila_tz.localize(datetime.datetime(2022,1,1,15,0,0))
+    last_datetime = int(manila_time.timestamp())
+    date_time_now = int(manila_tz.localize(datetime.datetime.now()).timestamp())
     try:
-        with open("weather_data.jsonl", "r") as file:
+        with open("weather_data_new.jsonl", "r") as file:
             # check the last row and datetime
             last_line = file.readlines()[-1]
             last_line_dict = eval(last_line)
             last_datetime = last_line_dict["dt"]
     except FileNotFoundError:
         #create the file if it doesn't exist
-        with open("weather_data.jsonl", "w") as file:
+        with open("weather_data_new.jsonl", "w") as file:
             pass
     for i in range(last_datetime, date_time_now, 86400):
         weather_to_jsonl(i)

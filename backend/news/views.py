@@ -9,6 +9,6 @@ def index(request):
     news_results = search_articles(date)
     # serialize news objects to json format
     news_json = list(news_results.values())
-    print(news_json)
+    #print(news_json)
     # return the json response
     return JsonResponse(news_json, safe=False)
