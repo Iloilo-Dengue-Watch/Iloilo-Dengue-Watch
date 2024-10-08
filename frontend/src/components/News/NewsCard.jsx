@@ -22,7 +22,8 @@ const ExpandMore = styled((props) => {
     }),
 }));
 
-export default function NewsCard() {
+// eslint-disable-next-line react/prop-types
+export default function NewsCard({title,summary,link,source,image, pub_date, description}) {
     const [expanded, setExpanded] = React.useState(false);
 
     const handleExpandClick = () => {
@@ -32,25 +33,23 @@ export default function NewsCard() {
     return (
         <Card sx={{ maxWidth: 345, minHeight: 400, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <CardHeader
-                title="Shrimp and Chorizo Paella"
-                subheader="September 14, 2016"
+                title={title}
+                subheader={pub_date}
             />
             <CardMedia
                 component="img"
                 height="194"
-                image="/static/images/cards/paella.jpg"
-                alt="Paella dish"
+                image={image}
+                alt={image}
             />
             <CardContent>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    This impressive paella is a perfect party dish and a fun meal to cook
-                    together with your guests. Add 1 cup of frozen peas along with the mussels,
-                    if you like.
+                    {description}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
                 <IconButton aria-label="open-link">
-                    <a href="https://example.com/recipe/67890" target="_blank" rel="noopener noreferrer">
+                    <a href={link} target="_blank" rel="noopener noreferrer">
                         <OpenInNewSharpIcon />
                     </a>
                 </IconButton>
@@ -68,9 +67,8 @@ export default function NewsCard() {
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
-                    <Typography sx={{ marginBottom: 2 }}>Method:</Typography>
                     <Typography>
-                        Set aside off of the heat to let rest for 10 minutes, and then serve.
+                        {summary}
                     </Typography>
                 </CardContent>
             </Collapse>

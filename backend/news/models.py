@@ -12,6 +12,6 @@ class News(models.Model):
     img_url = models.URLField()
     chatgpt_summ_web = models.TextField()
     chatgpt_summ_twitter = models.TextField()
-
+    url = models.URLField()
     def __str__(self):
         return self.title

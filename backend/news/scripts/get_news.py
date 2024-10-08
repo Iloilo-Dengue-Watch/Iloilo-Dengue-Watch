@@ -59,9 +59,9 @@ def search_articles(date_str):
             article_date = datetime.strptime(article_date_str, '%m/%d/%Y, %I:%M %p, %z')
 
             response = client.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model="gpt-4",
                 messages=[
-                    {"role": "system", "content": "Summarize the content of the given url with key insights and data. Make it such that it is automatically inputted in a div in a website."},
+                    {"role": "system", "content": "You are web developer. Summarize the following article in the url."},
                     {"role": "user", "content": url}
                 ]
             )
@@ -74,7 +74,8 @@ def search_articles(date_str):
                 source=source_name,
                 img_url=img_url,
                 chatgpt_summ_web=summary_web,
-                chatgpt_summ_twitter=summary_web  # You can change this if Twitter summary is different
+                chatgpt_summ_twitter=summary_web,  # You can change this if Twitter summary is different
+                url = url
             )
             news_entry.save()
             top_3_news.append(news_entry)
