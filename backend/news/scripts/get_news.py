@@ -61,7 +61,7 @@ def search_articles(date_str):
             response = client.chat.completions.create(
                 model="gpt-4",
                 messages=[
-                    {"role": "system", "content": "You are web developer. Summarize the following article in the url."},
+                    {"role": "system", "content": "You are a web developer. Summarize the following article in the url. Include vital statistics like number of dengue cases, etc."},
                     {"role": "user", "content": url}
                 ]
             )

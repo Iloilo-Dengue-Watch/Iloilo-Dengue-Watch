@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ml',
     'news',
+    'chat',
     'rest_framework',
     'corsheaders',
 ]
