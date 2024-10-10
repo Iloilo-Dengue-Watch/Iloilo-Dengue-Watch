@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function Navbar() {
   return (
-    <AppBar >
+    <AppBar position="relative">
       <Toolbar>
         <Typography variant="h6" style={{ flexGrow: 1 }}>
           AI4GHI Challenge

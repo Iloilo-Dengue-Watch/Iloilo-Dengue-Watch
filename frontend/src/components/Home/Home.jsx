@@ -61,6 +61,19 @@ function Home() {
           </Paper>
         </Grid2>
       </Grid2>
+      <Grid2 item xs={12} sm={6}>
+        <Paper elevation={3} style={{ padding: '20px'}}>
+          <Typography variant="h6" gutterBottom>
+            Chat
+          </Typography>
+          <Typography variant="body2">
+            Chat with ChatGPT 4 for dengue related things.
+          </Typography>
+          <Button component={Link} to="/chat" variant="contained" color="primary" style={{ marginTop: '10px' }}>
+            Join Chat
+          </Button>
+        </Paper>
+        </Grid2>
     </Container>
   );
 }

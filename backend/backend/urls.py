@@ -21,6 +21,7 @@ urlpatterns = [
     path('news/', include('news.urls')),
     path('admin/', admin.site.urls),
     path('chat/', include('chat.urls')),
+    path('ml/', include('ml.urls')),
     ]
 
 
