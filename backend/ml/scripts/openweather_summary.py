@@ -14,10 +14,12 @@ def get_weather_data(lat="10.72015", long="122.562106"):
     print(response)
     humidity = response["humidity"]['afternoon']
     temp = response["temperature"]['afternoon']
-    precipitation = response["precipitation"]['total']
+    precipitation = response.get("precipitation", 0)
+    if precipitation != 0:
+        precipitation = precipitation['total']
     resp = {
-        "humidity": humidity,
-        "temperature": temp,
-        "precipitation": precipitation
+        "humidity": str(humidity) + '%',
+        "temperature": str(round(temp - 273.15,2)) + '°C',
+        "precipitation": str(precipitation) + ' mm'
     }
     return resp
