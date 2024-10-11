@@ -13,12 +13,8 @@ def chatbot_response(request):
     user_input = request.GET.get('input')
     system_content = """
         Make your response in a style where you are an AI assistant.
-        However, make sure that the response is like a web developer with HTML tags.
-        Don't put in the <html> and <body> tags, just the content inside.
         Only accept prompts about dengue topic. If topic isnt about dengue, return a message saying that you only accept prompts about dengue. 
         Make it informative.
-        Use tailwindcss to style the response.
-        For example, bold the h tags, put dots in the ul tags, etc. Dont put margin and padding in the tailwindcss classes e.g. mx-4, py-2, mt-4, etc.
         """
     client = openai.Client(api_key=openai_key)
     response = client.chat.completions.create(

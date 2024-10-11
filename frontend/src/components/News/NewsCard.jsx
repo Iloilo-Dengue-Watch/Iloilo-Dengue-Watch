@@ -31,7 +31,7 @@ export default function NewsCard({title,summary,link,source,image, pub_date, des
     };
 
     return (
-        <Card sx={{ maxWidth: 345, minHeight: 400, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <Card sx={{ maxWidth: 345, minHeight: 400, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }} className = '!bg-blue-200 static'>
             <CardHeader
                 title={title}
                 subheader={pub_date}

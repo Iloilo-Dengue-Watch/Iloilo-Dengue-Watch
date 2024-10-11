@@ -32,15 +32,15 @@ export default function Forecast() {
     return (
         <div className="flex flex-col align-middle">
             <h1 className="text-3xl font-bold text-center">Dengue Forecast</h1>
-            <div className="container flex flex-row">
+            <div className="container flex flex-row align-middle justify-center">
                 <Grid item xs={12} sm={12}>
 
                     <img src={imgForecast} alt="Forecast" style={{maxWidth: '100%', maxHeight: '400px'}}/>
                 </Grid>
                 <Grid item xs={12} sm={4}>
-                    <Box>
+                    <Box className = '!bg-cyan-700 bg-opacity-60 w-full p-2 m-2'>
 
-                        <Card style={{ margin: '10px 0' }}>
+                        <Card className = '!bg-cyan-700'>
                         {prediction.map((data, index) => (
                                 <CardContent key={index}>
                                     <h2>Date: {data.date}</h2>
