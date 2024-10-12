@@ -3,7 +3,7 @@
 
 export default function DengueInfo() {
     return (
-        <div className=" p-8 rounded-lg shadow-lg max-w-4xl mx-auto my-8 bg-opacity-50">
+        <div className=" p-10 rounded-lg shadow-lg max-w-4xl mx-auto my-8 bg-white">
             <h1 className="text-3xl font-bold text-gray-800 mb-4">Dengue Information in Iloilo City</h1>
             <div className="text-lg text-gray-600 mb-4">
                 <p className="mb-2">
@@ -42,21 +42,44 @@ export default function DengueInfo() {
                 </ul>
             </div>
             <h1 className="text-3xl font-bold text-gray-800 mb-4">The Alarming Cases of Dengue in Iloilo City</h1>
-            <div className="mb-4">
-                <img src="/public/cases.png" alt="Dengue Cases" className="rounded-lg shadow-lg mx-auto" />
+            <div className="mb-4 flex">
+                <img src="/public/cases.png" alt="Dengue Cases" className="rounded-lg shadow-lg mx-auto"/>
             </div>
             <div className="text-lg text-gray-600 mb-4">
                 <p className="mb-2">
-            Dengue is highly prevalent in Iloilo City, Philippines, due to several factors:
+                    Dengue is highly prevalent in Iloilo City, Philippines, due to several factors:
                 </p>
-            <ul className="list-disc list-inside ml-6">
-                <li><strong>Tropical Climate:</strong> The Philippines has a tropical climate, providing an ideal environment for mosquitoes to breed and thrive.</li>
-                <li><strong>Urbanization:</strong> Rapid urbanization leads to crowded living conditions, which can facilitate the spread of dengue.</li>
-                <li><strong>Water Storage Practices:</strong> Inadequate water storage practices can create breeding grounds for mosquitoes.</li>
-                <li><strong>High Population Density:</strong> Dense populations increase the likelihood of mosquito-human interactions.</li>
-            </ul>
+                <ul className="list-disc list-inside ml-6">
+                    <li><strong>Tropical Climate:</strong> The Philippines has a tropical climate, providing an ideal
+                        environment for mosquitoes to breed and thrive.
+                    </li>
+                    <li><strong>Urbanization:</strong> Rapid urbanization leads to crowded living conditions, which can
+                        facilitate the spread of dengue.
+                    </li>
+                    <li><strong>Water Storage Practices:</strong> Inadequate water storage practices can create breeding
+                        grounds for mosquitoes.
+                    </li>
+                    <li><strong>High Population Density:</strong> Dense populations increase the likelihood of
+                        mosquito-human interactions.
+                    </li>
+                </ul>
+            </div>
+            <h1 className="text-3xl font-bold text-gray-800 mb-4">The Dengue Trend</h1>
+            <div className="mb-8 flex flex-col items-center">
+                <img src="/public/trend.png" alt="Dengue Trend" className="rounded-lg shadow-lg mb-4 w-full max-w-2xl"/>
+                <div className="text-lg text-gray-600">
+                    <p className="mb-4">
+                        According to our <a href="/data" className="text-blue-600 hover:underline">model</a> in the data
+                        section of the website, the trend of dengue exhibits a yearly seasonality. Cases start to rise
+                        in <strong>July</strong> and begin to decline in <strong>November</strong>.
+                    </p>
+                    <p>
+                        This pattern is attributed to the increased rainfall and favorable temperatures for mosquito
+                        breeding during these months in the Philippines.
+                    </p>
+                </div>
             </div>
         </div>
-)
-    ;
+    )
+        ;
 }

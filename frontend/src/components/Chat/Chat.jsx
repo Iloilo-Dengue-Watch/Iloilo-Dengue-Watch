@@ -39,7 +39,7 @@ export default function Chat() {
         setIsTyping(true);
 
         try {
-            const response = await fetch(`http://127.0.0.1:8000/chat/?input=${userMessage}`);
+            const response = await fetch(`https://dengue-watch-backend-f59b9593b035.herokuapp.com/chat/?input=${userMessage}`);
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);

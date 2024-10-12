@@ -1,7 +1,10 @@
 export default function Variables() {
     return (
-        <div className="grid grid-cols-2 gap-8 p-8 rounded-lg">
-            <VariableCard
+        <>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white text-center">Environmental Variables</h1>
+    <div className="grid grid-cols-2 gap-8 p-8 rounded-lg">
+
+        <VariableCard
                 title="Temperature"
                 description="Warmer temperatures accelerate the mosquito life cycle, reducing the time from egg to adult.
                 This leads to more frequent breeding cycles and a higher population of mosquitoes¹.
@@ -31,6 +34,7 @@ export default function Variables() {
                 read_more="https://doi.org/10.1186/s12942-022-00317-0"
             />
         </div>
+            </>
     );
 }
 

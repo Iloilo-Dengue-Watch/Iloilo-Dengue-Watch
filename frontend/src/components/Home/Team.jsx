@@ -24,7 +24,7 @@ const teamMembers = [
         name: 'Fr. Mario Dimapilis',
         position: 'Member',
         school: 'De la Salle University',
-        description: 'Alice is an expert in cloud computing and distributed systems.',
+        description: 'I have been a Registered Nurse for more than 30 years with Master in Public Health. Currently, I am a student of PhD in Health Sciences (Research) at De La Salle Medical and Health Sciences Institute. I am also a Senior Nursing Clinical Instructor in the Department of Nursing of St. Anthony’s College in Antique, Philippines. I am interested in using generative AI in enhancing community participation and engagement in community health promotion programs like dengue management and hypertension among adults. I am also been a missionary Catholic priest for more than two decades with mission experiences in Kenya and in the Philippines.',
         image: 'https://scontent.fceb1-5.fna.fbcdn.net/v/t39.30808-6/357770442_10229950472123501_4384234892971185512_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGgF3ZpJDVKWncjBvG9vp15-dJKOfiGdnX50ko5-IZ2dfQpfIwdmCedO-O-8KBv4rp_d5JvXCsybmB7cPHaPSLa&_nc_ohc=KLm0V2jlz0UQ7kNvgFmaO6w&_nc_zt=23&_nc_ht=scontent.fceb1-5.fna&_nc_gid=ADBmq4MyLKlnNynqThVpZXk&oh=00_AYDRK2BUwLuEcZHMJ6Er6-sWMPOb1C9GV4xluETKCY5Txw&oe=670F62A6'
     },
     {
