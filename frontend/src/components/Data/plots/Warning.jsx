@@ -7,6 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import { useMediaQuery } from '@mui/material';
 
 export default function Warning() {
     const imageURL = "https://dengue-watch-backend-f59b9593b035.herokuapp.com/ml/forecast/?image=warning";
@@ -15,16 +16,17 @@ export default function Warning() {
     const [prediction, setPrediction] = useState([]);
 
     const warningThreshold = 10; // Adjust this value based on your preference
+
     useEffect(() => {
         fetch(warningURL)
             .then(response => response.json())
             .then(data => {
                 console.log("Fetched data:", data); // Debugging log
-                // Transform data into array for warnings
+                // Transform data into array for warnings and round values
                 const transformedData = Object.entries(data).map(([date, values]) => ({
-                    date,
-                    y: values.y,
-                    yhat_upper: values.yhat_upper
+                    date: formatDate(date), // Format the date here
+                    y: Math.round(values.y), // Round actual value
+                    yhat_upper: Math.round(values.yhat_upper) // Round forecast upper bound
                 }));
                 setPrediction(transformedData);
             })
@@ -39,7 +41,11 @@ export default function Warning() {
             .catch(error => console.log("Error fetching image:", error));
     }, []);
 
-    const countExceedingThreshold = prediction.filter(data => data.y > warningThreshold).length;
+    // Function to format date from 'YYYY-MM-DD' to 'Month Day, Year'
+    const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString('en-US', options);
+    };
 
     return (
         <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-lg max-w-4xl mx-auto my-8">
@@ -54,7 +60,6 @@ export default function Warning() {
                 </Typography>
             </div>
 
-
             <div className="overflow-x-auto w-full max-w-3xl border-2 p-4">
                 <div className="w-full max-w-3xl mb-6">
                     <Typography variant="h6" component="h2" className="text-center font-bold mb-4">
@@ -62,7 +67,7 @@ export default function Warning() {
                     </Typography>
                 </div>
                 <TableContainer component={Paper}>
-                    <Table sx={{minWidth: 650}} aria-label="warning table">
+                    <Table sx={{ minWidth: 650 }} aria-label="warning table">
                         <TableHead>
                             <TableRow>
                                 <TableCell>Date</TableCell>
@@ -76,7 +81,7 @@ export default function Warning() {
                                     <TableRow
                                         key={data.date}
                                         sx={{
-                                            '&:last-child td, &:last-child th': {border: 0},
+                                            '&:last-child td, &:last-child th': { border: 0 },
                                             backgroundColor: data.y > data.yhat_upper ? '#ffebee' : 'inherit' // Highlight rows exceeding threshold
                                         }}
                                     >

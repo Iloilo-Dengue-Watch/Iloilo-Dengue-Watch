@@ -10,16 +10,17 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-
 function Data() {
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-100 to-blue-300 py-8 px-4 lg:px-16">
-      <div className="shadow-xl bg-white rounded-lg p-6 lg:p-12 bg-gradient-to-r from-blue-100 to-blue-300 shadow-lg">
+    <div className="min-h-screen bg-gradient-to-r from-blue-100 to-blue-300 py-8 lg:px-16">
+      <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center">Data Prediction and Forecasting</h1>
+      <div className="p-6 lg:p-12">
         <div className="flex flex-col items-center">
           <WeatherCard />
+
         </div>
 
-        <div className="mt-12 text-center container px-5">
+        <div className="mt-12 text-center container md:px-5">
           <Typography variant="h3" component="h1" className="text-blue-600 mb-4 font-bold">
             Machine Learning Model Overview
           </Typography>

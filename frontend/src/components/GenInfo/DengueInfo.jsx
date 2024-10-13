@@ -67,6 +67,7 @@ export default function DengueInfo() {
             <h1 className="text-3xl font-bold text-gray-800 mb-4">The Dengue Trend</h1>
             <div className="mb-8 flex flex-col items-center">
                 <img src="/public/trend.png" alt="Dengue Trend" className="rounded-lg shadow-lg mb-4 w-full max-w-2xl"/>
+                <img src="/public/calendar.png" alt="Calendar" className="rounded-lg shadow-lg w-full max-w-2xl"/>
                 <div className="text-lg text-gray-600">
                     <p className="mb-4">
                         According to our <a href="/data" className="text-blue-600 hover:underline">model</a> in the data
