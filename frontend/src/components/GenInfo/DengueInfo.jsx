@@ -69,7 +69,7 @@ export default function DengueInfo() {
                 <img src="/public/trend.png" alt="Dengue Trend" className="rounded-lg shadow-lg mb-4 w-full max-w-2xl"/>
                 <img src="/public/calendar.png" alt="Calendar" className="rounded-lg shadow-lg w-full max-w-2xl"/>
                 <div className="text-lg text-gray-600">
-                    <p className="mb-4">
+                    <p className="my-4">
                         According to our <a href="/data" className="text-blue-600 hover:underline">model</a> in the data
                         section of the website, the trend of dengue exhibits a yearly seasonality. Cases start to rise
                         in <strong>July</strong> and begin to decline in <strong>November</strong>.

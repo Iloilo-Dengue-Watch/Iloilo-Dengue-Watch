@@ -11,14 +11,14 @@ const teamMembers = [
         position: 'Member',
         school: 'University of the Philippines - Diliman',
         description: 'I am currently an undergraduate student at the University of the Philippines Diliman. I am working in the System Modeling and Simulation Laboratory for my thesis, with the topic of Environmental Surveillance. I am interested in the application of AI techniques, particularly using models to analyze data and gain insights, as well as exploring how machine learning and simulation can be leveraged in practical, data-driven environments.',
-        image: 'https://scontent.fceb1-4.fna.fbcdn.net/v/t39.30808-6/346282939_2104816486394416_807033072443840265_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeF5JQLXwuF52V0wkJXXve7RQbhFh1CDXrdBuEWHUINet04FTs-Nsf-RKd2KLQQIRKDIALbEWasDkPz5kLsx4ro9&_nc_ohc=pznISB4qZAwQ7kNvgHgXB9s&_nc_zt=23&_nc_ht=scontent.fceb1-4.fna&_nc_gid=ANFIK_3owqZ6t5cNHEyjbCa&oh=00_AYDPkI6prdbfn63Kyb0kkgmdB4P7PG_ah-oxMDXyTHrWDA&oe=670F5A68'
+        image: '/Miguel.jpg'
     },
     {
         name: 'Jacob Maximus L. Usaraga',
         position: 'Member',
         school: 'University of the Philippines - Visayas',
         description: 'I am an applied mathematics student. I love doing data science, especially machine learning. I love building websites!',
-        image: 'https://scontent.fceb1-1.fna.fbcdn.net/v/t39.30808-6/449295418_2242133129505403_8506786999160777870_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeGw79wGzUwBTs9CZx5tSBIEK2m5gNXRRLorabmA1dFEunQmcBGDDFUdckLfW8DLhOIPVjPf_zmhe8A6PNLBJFUQ&_nc_ohc=ZSNut0eW_ZcQ7kNvgHKVhes&_nc_zt=23&_nc_ht=scontent.fceb1-1.fna&_nc_gid=Az41anw6K0FZUewavpAYc6C&oh=00_AYAYmcH8b-mWXCpiAxhkQqwlRL2ymqkw12zdprpeXCtXHg&oe=670F41B6'
+        image: '/Jacob.jpg'
     },
     {
         name: 'Fr. Mario Dimapilis',
@@ -27,12 +27,12 @@ const teamMembers = [
         description: 'I have been a Registered Nurse for more than 30 years with a Master in Public Health. Currently, I am a student of PhD in Health Sciences (Research) at De La Salle Medical and Health Sciences Institute. I am also a Senior Nursing Clinical Instructor in the Department of Nursing of St. Anthony’s College in Antique, Philippines. I am interested in using generative AI in enhancing community participation and engagement in community health promotion programs like dengue management and hypertension among adults. I have also been a missionary Catholic priest for more than two decades with mission experiences in Kenya and in the Philippines.',
         image: 'https://scontent.fceb1-5.fna.fbcdn.net/v/t39.30808-6/357770442_10229950472123501_4384234892971185512_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGgF3ZpJDVKWncjBvG9vp15-dJKOfiGdnX50ko5-IZ2dfQpfIwdmCedO-O-8KBv4rp_d5JvXCsybmB7cPHaPSLa&_nc_ohc=KLm0V2jlz0UQ7kNvgFmaO6w&_nc_zt=23&_nc_ht=scontent.fceb1-5.fna&_nc_gid=ADBmq4MyLKlnNynqThVpZXk&oh=00_AYDRK2BUwLuEcZHMJ6Er6-sWMPOb1C9GV4xluETKCY5Txw&oe=670F62A6'
     },
-    {
-        name: 'Dr. Pearl Bongolan',
-        position: 'Mentor',
-        school: 'University of the Philippines - Diliman',
-        description: 'Dr. Pearl is a data scientist with a focus on natural language processing.',
-    }
+    //{
+      //  name: 'Dr. Pearl Bongolan',
+        //position: 'Mentor',
+       // school: 'University of the Philippines - Diliman',
+       // description: 'Dr. Pearl is a data scientist with a focus on natural language processing.',
+    //}
 ];
 
 export default function MeetTheTeam() {

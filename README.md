@@ -2,7 +2,7 @@
 This repository is a project submitted to the [AI4GHI Challenge 2024](https://docs.google.com/document/d/15pR_djH-cDg0AA55n_iLQuZQrKnluwcAru-CkHLjwUc/edit).
 
 ## Team
-- Josh Cemine
+- Miguel Angelo Bondad
 - Jacob Maximus Usaraga
 - Mario Dimapilis
 

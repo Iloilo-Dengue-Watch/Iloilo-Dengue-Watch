@@ -13,7 +13,7 @@ function JumbotronHome() {
                         <p className="mb-8 text-base font-normal text-gray-300 lg:text-lg sm:px-8 lg:px-16">
                             An AI4GHI Challenge Project Submission.
                         </p>
-                        <div className="flex flex-col space-y-4 md:flex-row md:justify-center md:space-y-0 md:space-x-4">
+                        <div className="flex flex-col space-y-4 lg:flex-row lg:justify-center lg:space-y-0 lg:space-x-4 p-10">
                             <a href="/general-information"
                                className="w-full md:w-auto inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
                                 Get started
