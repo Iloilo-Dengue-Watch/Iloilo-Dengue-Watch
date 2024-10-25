@@ -1,4 +1,3 @@
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -15,7 +14,7 @@ export default function WeatherCard() {
         humidity: '',
         precipitation: ''
     });
-
+    const [gpt_response, setGPT_response] = useState('');
     // Get today's date
     const today = format(new Date(), 'eeee, MMMM d, yyyy'); // Example: "Saturday, October 12, 2024"
 
@@ -23,6 +22,10 @@ export default function WeatherCard() {
         fetch('https://dengue-watch-backend-f59b9593b035.herokuapp.com/ml/weather/')
             .then(response => response.json())
             .then(data => setWeather(data))
+            .catch(error => console.log(error))
+        fetch('https://dengue-watch-backend-f59b9593b035.herokuapp.com/ml/chat_weather_summary/')
+            .then(response => response.json())
+            .then(data => setGPT_response(data.response))
             .catch(error => console.log(error))
     }, []);
 
@@ -69,7 +72,7 @@ export default function WeatherCard() {
             </Box>
 
             {/* Weather Dengue Content */}
-            <WeatherDengue content={weather.gpt_response} />
+            <WeatherDengue content={gpt_response} />
         </div>
     );
 }

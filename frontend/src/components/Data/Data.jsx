@@ -1,5 +1,8 @@
 import WeatherCard from './WeatherCard';
 import Forecast from './plots/Forecast';
+import TemperatureChart from '../TemperatureChart';
+import HumidityChart from '../HumidityChart';
+import PrecipitationChart from '../PrecipitationChart';
 import Warning from './plots/Warning';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -10,13 +13,44 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { useEffect, useState } from 'react';
+
 function Data() {
+  const [weatherData, setWeatherData] = useState({ temperature: [], date: [], precipitation : [], humidity: [] });
+  useEffect(() => {
+    fetch('https://dengue-watch-backend-f59b9593b035.herokuapp.com/ml/weather_data_year/')
+        .then(response => response.json())
+        .then(data => {
+            // Extract the required properties from the fetched data
+            const temperatures = data.map(item => item.temperature);
+            const dates = data.map(item => item.date);
+            const humidities = data.map(item => item.humidity);
+            // Assuming precipitation is also in the data
+            const precipitations = data.map(item => item.precipitation || 0); // Default to 0 if not present
+
+            setWeatherData({
+                temperature: temperatures,
+                date: dates,
+                precipitation: precipitations,
+                humidity: humidities
+            });
+
+            console.log(data); // Log the data after setting it
+        })
+        .catch(error => console.log(error));
+}, []);
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-100 to-blue-300 py-8 lg:px-16">
       <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center">Data Prediction and Forecasting</h1>
       <div className="p-6 lg:p-12">
         <div className="flex flex-col items-center">
           <WeatherCard />
+
+        </div>
+        <div className = "bg-white">
+          <TemperatureChart data={weatherData.temperature} date={weatherData.date} />
+          <HumidityChart data={weatherData.humidity} date={weatherData.date} />
+          <PrecipitationChart data={weatherData.precipitation} date={weatherData.date} />
 
         </div>
 

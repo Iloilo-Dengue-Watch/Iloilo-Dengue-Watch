@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SideBarComponent from './components/SideBar.jsx';
 import Data from "./components/Data/Data.jsx";
@@ -27,13 +27,6 @@ function App() {
         };
     }, []);
 
-    useEffect(() => {
-        fetch('https://dengue-watch-backend-f59b9593b035.herokuapp.com/news/?date=1')
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);  // Debugging purposes
-            });
-    }, []);
 
     return (
         <Router>
