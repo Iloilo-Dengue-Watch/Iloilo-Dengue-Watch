@@ -37,13 +37,13 @@ const teamMembers = [
 
 export default function MeetTheTeam() {
     return (
-        <Box sx={{ flexGrow: 1, p: 8 }}>
+        <Box className = "p-8 md:p-2 flex flex-col !align-middle !justify-center items-center mt-8">
             <Typography variant="h4" component="div" gutterBottom className="text-center text-gray-800 mb-4">
                 Meet the Team
             </Typography>
-            <Grid container spacing={2} justifyContent="center"> {/* Reduced spacing from 4 to 2 */}
+            <div className="flex flex-col md:flex-row"> {/* Reduced spacing from 4 to 2 */}
                 {teamMembers.map((member, index) => (
-                    <Grid item xs={12} sm={6} md={4} key={index}>
+                    <div className='my-4 md:mx-4' key={index}>
                         <Card sx={{ maxWidth: 345, minHeight: 400, backgroundColor: 'white', boxShadow: 3, borderRadius: 2 }}>
                             <CardContent className="text-center">
                                 <Avatar
@@ -65,9 +65,9 @@ export default function MeetTheTeam() {
                                 </Typography>
                             </CardContent>
                         </Card>
-                    </Grid>
+                    </div>
                 ))}
-            </Grid>
+            </div>
         </Box>
     );
 }

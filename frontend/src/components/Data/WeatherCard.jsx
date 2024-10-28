@@ -23,7 +23,7 @@ export default function WeatherCard() {
             .then(response => response.json())
             .then(data => setWeather(data))
             .catch(error => console.log(error))
-        fetch('https://dengue-watch-backend-f59b9593b035.herokuapp.com/ml/chat_weather_summary/')
+        fetch('https://dengue-watch-backend-f59b9593b035.herokuapp.com/ml/chat_weather_summary')
             .then(response => response.json())
             .then(data => setGPT_response(data.response))
             .catch(error => console.log(error))

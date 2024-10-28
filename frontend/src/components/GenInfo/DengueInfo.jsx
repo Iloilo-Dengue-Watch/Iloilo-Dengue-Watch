@@ -43,7 +43,7 @@ export default function DengueInfo() {
             </div>
             <h1 className="text-3xl font-bold text-gray-800 mb-4">The Alarming Cases of Dengue in Iloilo City</h1>
             <div className="mb-4 flex">
-                <img src="/public/cases.png" alt="Dengue Cases" className="rounded-lg shadow-lg mx-auto"/>
+                <img src="/cases.png" alt="Dengue Cases" className="rounded-lg shadow-lg mx-auto"/>
             </div>
             <div className="text-lg text-gray-600 mb-4">
                 <p className="mb-2">
@@ -66,8 +66,8 @@ export default function DengueInfo() {
             </div>
             <h1 className="text-3xl font-bold text-gray-800 mb-4">The Dengue Trend</h1>
             <div className="mb-8 flex flex-col items-center">
-                <img src="/public/trend.png" alt="Dengue Trend" className="rounded-lg shadow-lg mb-4 w-full max-w-2xl"/>
-                <img src="/public/calendar.png" alt="Calendar" className="rounded-lg shadow-lg w-full max-w-2xl"/>
+                <img src="/trend.png" alt="Dengue Trend" className="rounded-lg shadow-lg mb-4 w-full max-w-2xl"/>
+                <img src="/calendar.png" alt="Calendar" className="rounded-lg shadow-lg w-full max-w-2xl"/>
                 <div className="text-lg text-gray-600">
                     <p className="my-4">
                         According to our <a href="/data" className="text-blue-600 hover:underline">model</a> in the data

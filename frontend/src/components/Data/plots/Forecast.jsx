@@ -34,11 +34,11 @@ export default function Forecast() {
             <Typography variant="h4" component="h1" className="text-center font-bold mb-6">
                 Dengue Forecast
             </Typography>
-            <div className="flex flex-col xl:flex-row">
-                <Grid item xs={12} sm={8}>
-                    <img src={imgForecast} alt="Forecast" className="rounded-lg shadow-lg w-full max-h-96 object-cover" />
+            <div className="flex flex-col xl:flex-row w-full">
+                <div>
+                    <img src={imgForecast} alt="Forecast" className="rounded-lg shadow-lg w-full max-h-96" />
                     <p className="text-center m-2">The model used for this is the Prophet model by Meta.</p>
-                </Grid>
+                </div>
                 <Grid item xs={12} sm={4}>
                     <Box className="bg-cyan-700 bg-opacity-60 w-full p-4 rounded-lg shadow-lg">
                         <Card className="bg-cyan-700">

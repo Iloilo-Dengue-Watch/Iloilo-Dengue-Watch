@@ -1,8 +1,6 @@
 import WeatherCard from './WeatherCard';
 import Forecast from './plots/Forecast';
-import TemperatureChart from '../TemperatureChart';
-import HumidityChart from '../HumidityChart';
-import PrecipitationChart from '../PrecipitationChart';
+import WeatherChart from '../WeatherChart';
 import Warning from './plots/Warning';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -41,16 +39,16 @@ function Data() {
 }, []);
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-100 to-blue-300 py-8 lg:px-16">
-      <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center">Data Prediction and Forecasting</h1>
-      <div className="p-6 lg:p-12">
+      <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center sticky">Data Prediction and Forecasting</h1>
+      <div className="p-2 lg:p-12">
         <div className="flex flex-col items-center">
           <WeatherCard />
 
         </div>
-        <div className = "bg-white">
-          <TemperatureChart data={weatherData.temperature} date={weatherData.date} />
-          <HumidityChart data={weatherData.humidity} date={weatherData.date} />
-          <PrecipitationChart data={weatherData.precipitation} date={weatherData.date} />
+        <div>
+          <WeatherChart date={weatherData.date} data={weatherData.temperature} title="Temperature Data" dataKey="temperature" color="#ff5722" />
+          <WeatherChart date={weatherData.date} data={weatherData.humidity} title="Humidity Data" dataKey="humidity" color="#2196f3" />
+          <WeatherChart date={weatherData.date} data={weatherData.precipitation} title="Precipitation Data" dataKey="precipitation" color="#4caf50" />
 
         </div>
 
@@ -117,7 +115,7 @@ function Data() {
             </Typography>
           </Box>
 
-          <div className="mt-8">
+          <div className="mt-8 flex flex-col items-center">
             <Typography variant="h4" component="h2" className="text-gray-800 mb-4 font-bold">
               Dengue Case Forecast
             </Typography>

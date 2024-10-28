@@ -16,8 +16,8 @@ export default function NewsSection() {
 
     return (
         <div className="py-4 px-4 flex flex-col items-center">
-            <h1 className="text-4xl font-bold text-center mb-8">Top Stories</h1>
-            
+            <h1 className="text-4xl font-bold text-center mb-8">News</h1>
+            <h4 className="text-xl font-semibold text-center mb-4">Latest news articles related to dengue fever</h4>
             {news.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
                     {news.map((newsItem) => (

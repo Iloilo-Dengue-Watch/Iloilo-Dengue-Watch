@@ -6,9 +6,10 @@ export default function WeatherDengue({ content }) {
             <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">
                 CHATGPT 4 Weather and Dengue Information Summary Today
             </h2>
-            <p className="text-gray-700 lg:text-lg leading-relaxed">
-                {content}
-            </p>
+            <p
+                className="text-black lg:text-lg leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: content }}
+            />
 
             {/* Improved Note Section */}
             <div className="bg-blue-50 text-blue-900 p-4 mt-8 rounded-lg border border-blue-200 text-center">
