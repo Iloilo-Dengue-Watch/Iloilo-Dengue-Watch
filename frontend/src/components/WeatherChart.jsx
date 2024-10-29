@@ -59,39 +59,49 @@ export default function WeatherChart({ date, data, title, dataKey, color }) {
   }, [data, date, dataKey]);
 
   return (
-    <div className="flex flex-col items-center justify-center bg-gradient-to-b from-blue-800 to-blue-600 md:p-6 rounded-lg shadow-lg mt-4">
-      <h1 className="text-3xl font-bold text-white my-6 text-center">{title}</h1>
-      <div className='w-full p-2'>
-      <div className="flex justify-end flex-col mb-4 w-fit">
-        <label className="text-white mr-2">Min Y-axis Value</label>
-          <div>
-             <button className='bg-slate-300 bg-opacity-50 p-2 mx-2 rounded-lg' onClick = {()=>setMinDomain(false)}>0</button>
-             <button className='bg-slate-300 bg-opacity-50 p-2 rounded-lg' onClick={()=>setMinDomain(true)}>Data</button>
+      <div
+          className="flex flex-col items-center justify-center bg-gradient-to-b from-blue-800 to-blue-600 md:p-6 rounded-lg shadow-lg mt-4">
+        <h1 className="text-3xl font-bold text-white my-6 text-center">{title}</h1>
+        <div className='w-full p-2 flex flex-row justify-between items-center md:!px-10'>
+          <div className="flex flex-row items-center mb-4 w-fit">
+            <div className="w-fit">
+              <label className="text-white mr-2 w-fit">Min Y-axis Value</label>
+              <div>
+                <button className='bg-slate-300 bg-opacity-50 p-2 mx-2 rounded-lg'
+                        onClick={() => setMinDomain(false)}>0
+                </button>
+                <button className='bg-slate-300 bg-opacity-50 p-2 rounded-lg' onClick={() => setMinDomain(true)}>Data
+                </button>
+              </div>
+            </div>
           </div>
-     </div>
 
+          <div className="mb-2 ml-4 w-full flex justify-end">
+            <DropDownWeather handleSelect={handleSelect}/>
+          </div>
+        </div>
+        {chartData.length > 0 ? (
+            <>
 
+              <div
+                  className="w-full h-96 bg-gray-100 rounded-lg shadow-md md:p-4"> {/* Chart container with gray background */}
+                <ResponsiveContainer className="-ml-2">
+                  <LineChart data={fluidChartData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0"/>
+                    <XAxis dataKey="date" stroke="#888"/>
+                    <YAxis domain={[minDomain ? Math.min(...fluidChartData.map(d => d[dataKey])) : 0, 'dataMax']}
+                           stroke="#888"/>
+                    <Tooltip contentStyle={{backgroundColor: '#fff', border: '1px solid #ccc'}}/>
+                    <Line type="monotone" dataKey={dataKey} stroke={color}
+                          dot={!["Last 6 months", "Last 12 months"].includes(selectedTimeFrame)}/>
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+
+            </>
+        ) : (
+            <ClipLoader color="#000" loading={true} size={50}/>
+        )}
       </div>
-      {chartData.length > 0 ? (
-        <>
-          <div className="w-full h-96 bg-gray-100 rounded-lg shadow-md md:p-4"> {/* Chart container with gray background */}
-            <ResponsiveContainer className="-ml-2">
-              <LineChart data={fluidChartData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
-                <XAxis dataKey="date" stroke="#888" />
-                <YAxis domain={[minDomain ? Math.min(...fluidChartData.map(d => d[dataKey])) : 0, 'dataMax']} stroke="#888" />
-                <Tooltip contentStyle={{ backgroundColor: '#fff', border: '1px solid #ccc' }} />
-                <Line type="monotone" dataKey={dataKey} stroke={color} dot={!["Last 6 months", "Last 12 months"].includes(selectedTimeFrame)} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="mb-2 ml-4 w-full">
-            <DropDownWeather handleSelect={handleSelect} />
-          </div>
-        </>
-      ) : (
-        <ClipLoader color="#000" loading={true} size={50} />
-      )}
-    </div>
   );
 }
