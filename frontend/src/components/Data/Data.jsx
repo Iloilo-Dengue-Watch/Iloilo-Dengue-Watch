@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { useEffect, useState } from 'react';
 
-function Data() {
+function Data({handleTabChange}) {
   const [weatherData, setWeatherData] = useState({ temperature: [], date: [], precipitation : [], humidity: [] });
   useEffect(() => {
     fetch('https://dengue-watch-backend-f59b9593b035.herokuapp.com/ml/weather_data_year/')
@@ -37,6 +37,9 @@ function Data() {
         })
         .catch(error => console.log(error));
 }, []);
+  useEffect(() => {
+  handleTabChange("Data");
+  }, [handleTabChange]);
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-100 to-blue-300 py-8 lg:px-16">
       <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center sticky">Data Prediction and Forecasting</h1>

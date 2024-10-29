@@ -11,8 +11,8 @@ import {
 } from '@chatscope/chat-ui-kit-react';
 import { useState } from 'react';
 import { FaRobot, FaUser } from 'react-icons/fa';
-
-export default function Chat() {
+import { useEffect } from 'react';
+export default function Chat({handleTabChange}) {
     const [messages, setMessages] = useState([  // State for messages
         {
             type: 'text',
@@ -25,7 +25,9 @@ export default function Chat() {
         }
     ]);
     const [isTyping, setIsTyping] = useState(false);
-
+    useEffect(() => {
+        handleTabChange("Chat");
+    }, [handleTabChange]);
     const handleSend = async (userMessage) => {
         // Add the user's message to the chat
         setMessages(prevMessages => [

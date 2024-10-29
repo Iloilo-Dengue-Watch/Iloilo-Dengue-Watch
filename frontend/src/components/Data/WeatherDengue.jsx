@@ -1,14 +1,15 @@
 import { Link } from "react-router-dom";
-
+import "./asset.css"
 export default function WeatherDengue({ content }) {
     return (
-        <div className="bg-white bg-opacity-80 p-8 rounded-lg shadow-md border border-gray-200 max-w-xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">
+        <div className="bg-white bg-opacity-80 p-8 rounded-lg shadow-md border border-gray-200 max-w-xl mx-auto" id="chat-summary">
+            <h1 className="text-2xl font-bold text-gray-900 mb-4 text-center">
                 CHATGPT 4 Weather and Dengue Information Summary Today
-            </h2>
+            </h1>
             <p
                 className="text-black lg:text-lg leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: content }}
+                id="chat-summary-content"
             />
 
             {/* Improved Note Section */}

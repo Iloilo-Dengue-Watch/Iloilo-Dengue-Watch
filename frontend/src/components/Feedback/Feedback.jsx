@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, TextField, Typography, Paper, Container } from '@mui/material';
 import { Send as SendIcon } from '@mui/icons-material'; // Import icon for button
 
-export default function Feedback() {
+export default function Feedback({handleTabChange}) {
     const [feedback, setFeedback] = useState('');
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
@@ -19,6 +19,9 @@ export default function Feedback() {
         const contactNumberRegex = /^09\d{9}$/; // Regex for contact number format 09xxxxxxxxx
         return contactNumberRegex.test(contactNumber);
     };
+    useEffect(() => {
+    handleTabChange("Feedback");
+    }, [handleTabChange]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

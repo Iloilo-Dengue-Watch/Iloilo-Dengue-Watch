@@ -1,0 +1,10 @@
+mark{
+    background-color: #ffeb3b; /* Light yellow background */
+    color: #000; /* Black text color for better readability */
+    padding: 0.2em; /* Optional: Add some padding for better appearance */
+    border-radius: 0.2em; /* Optional: Add rounded corners */
+}
+h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+}

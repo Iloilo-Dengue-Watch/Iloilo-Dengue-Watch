@@ -2,7 +2,7 @@ import NewsCard from './NewsCard';
 import { useState, useEffect } from "react";
 import { ColorRing } from 'react-loader-spinner';
 
-export default function NewsSection() {
+export default function NewsSection({handleTabChange}) {
     const [news, setNews] = useState([]);
 
     useEffect(() => {
@@ -13,6 +13,9 @@ export default function NewsSection() {
                 setNews(data);
             });
     }, []);
+    useEffect(() => {
+    handleTabChange("News");
+    }, [handleTabChange]);
 
     return (
         <div className="py-4 px-4 flex flex-col items-center">
