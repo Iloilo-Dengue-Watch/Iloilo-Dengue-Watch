@@ -2,7 +2,7 @@ export default function Variables() {
     return (
         <>
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white text-center">Environmental Variables</h1>
-    <div className="grid lg:grid-cols-2 gap-8 p-8 rounded-lg">
+    <div className="grid lg:grid-cols-2 gap-8 md:p-8 rounded-lg">
 
         <VariableCard
                 title="Temperature"
