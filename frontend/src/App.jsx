@@ -23,7 +23,6 @@ export default function App() {
         const mainBody = document.getElementById("main");
         if (mainBody) {
             const currentScrollY = mainBody.scrollTop;
-            console.log(currentScrollY);
             if (currentScrollY > lastScrollY.current) {
                 setIsVisible(false); // Hide on scroll down
             } else {

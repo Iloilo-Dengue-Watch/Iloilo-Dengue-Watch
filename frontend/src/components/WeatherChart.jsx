@@ -49,7 +49,7 @@ export default function WeatherChart({ date, data, title, dataKey, color }) {
     if (data.length > 0) {
       const formattedData = data.map((value, index) => ({
         [dataKey]: value,
-        date: date[index],
+        date: formatDate(date[index]),
       }));
       setChartData(formattedData);
       // Get the last 30 days as default
@@ -58,6 +58,10 @@ export default function WeatherChart({ date, data, title, dataKey, color }) {
     }
   }, [data, date, dataKey]);
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('en-US', options);
+};
   return (
       <div
           className="flex flex-col items-center justify-center bg-gradient-to-b from-blue-800 to-blue-600 md:p-6 rounded-lg shadow-lg mt-4">
