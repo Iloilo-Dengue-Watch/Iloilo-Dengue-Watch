@@ -21,7 +21,6 @@ export default function Warning() {
         fetch(warningURL)
             .then(response => response.json())
             .then(data => {
-                console.log("Fetched data:", data); // Debugging log
                 // Transform data into array for warnings and round values
                 const transformedData = Object.entries(data).map(([date, values]) => ({
                     date: formatDate(date), // Format the date here

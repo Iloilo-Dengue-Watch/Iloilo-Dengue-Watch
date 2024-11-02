@@ -9,7 +9,6 @@ export default function NewsSection({handleTabChange}) {
         fetch('https://dengue-watch-backend-f59b9593b035.herokuapp.com/news/')
             .then(response => response.json())
             .then(data => {
-                console.log(data);  // Debugging purposes
                 setNews(data);
             });
     }, []);

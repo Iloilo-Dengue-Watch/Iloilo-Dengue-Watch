@@ -33,7 +33,6 @@ function Data({handleTabChange}) {
                 humidity: humidities
             });
 
-            console.log(data); // Log the data after setting it
         })
         .catch(error => console.log(error));
 }, []);
@@ -43,16 +42,27 @@ function Data({handleTabChange}) {
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-100 to-blue-300 py-8 lg:px-16">
       <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center sticky">Data Prediction and Forecasting</h1>
+
+          <div className="mt-8 flex flex-col items-center">
+            <Forecast />
+          </div>
+
+          <div className="mt-8">
+            <Typography variant="h4" component="h2" className="text-red-600 mb-4 font-bold">
+              Critical Warnings
+            </Typography>
+            <Typography variant="body1" className="text-gray-600 mb-6 text-center">
+              This section highlights potential dengue outbreaks based on recent trends and environmental conditions. Pay close attention to areas marked with high warnings.
+            </Typography>
+            <Warning />
+          </div>
       <div className="p-2 lg:p-12">
         <div className="flex flex-col items-center">
           <WeatherCard />
 
         </div>
         <div>
-          <WeatherChart date={weatherData.date} data={weatherData.temperature} title="Temperature Data" dataKey="temperature" color="#ff5722" />
-          <WeatherChart date={weatherData.date} data={weatherData.humidity} title="Humidity Data" dataKey="humidity" color="#2196f3" />
-          <WeatherChart date={weatherData.date} data={weatherData.precipitation} title="Precipitation Data" dataKey="precipitation" color="#4caf50" />
-
+            <WeatherChart data = {weatherData} />
         </div>
 
         <div className="mt-12 text-center container md:px-5">
@@ -118,25 +128,6 @@ function Data({handleTabChange}) {
             </Typography>
           </Box>
 
-          <div className="mt-8 flex flex-col items-center">
-            <Typography variant="h4" component="h2" className="text-gray-800 mb-4 font-bold">
-              Dengue Case Forecast
-            </Typography>
-            <Typography variant="body1" className="text-gray-600 mb-6">
-              Below is the forecast of dengue cases over time, factoring in environmental data. This helps in proactive public health management by providing predictive insights.
-            </Typography>
-            <Forecast />
-          </div>
-
-          <div className="mt-8">
-            <Typography variant="h4" component="h2" className="text-red-600 mb-4 font-bold">
-              Critical Warnings
-            </Typography>
-            <Typography variant="body1" className="text-gray-600 mb-6">
-              This section highlights potential dengue outbreaks based on recent trends and environmental conditions. Pay close attention to areas marked with high warnings.
-            </Typography>
-            <Warning />
-          </div>
         </div>
       </div>
     </div>

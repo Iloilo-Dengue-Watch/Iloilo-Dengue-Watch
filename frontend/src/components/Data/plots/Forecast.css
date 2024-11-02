@@ -1,0 +1,93 @@
+.forecast-container {
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
+}
+
+.forecast-intro, .forecast-content {
+    animation: slideIn 1s ease-in-out forwards;
+}
+
+.forecast-image-container {
+    transition: transform 0.3s ease, opacity 0.5s;
+}
+.forecast-image-container:hover .forecast-image {
+    transform: scale(1.05);
+}
+
+.forecast-card-container {
+    transition: transform 0.3s ease, opacity 0.5s;
+}
+.forecast-card-container:hover {
+    transform: scale(1.02);
+}
+
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 1.2s ease-in-out forwards;
+}
+
+.slide-in {
+    transform: translateY(20px);
+    opacity: 0;
+    animation: slideIn 0.8s ease-in-out forwards;
+}
+
+.scale-up {
+    transform: scale(0.95);
+    animation: scaleUp 0.8s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes scaleUp {
+    from { transform: scale(0.95); }
+    to { transform: scale(1); }
+}
+
+/* Styles for the modal */
+.modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.modal-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.modal-image:hover {
+    transform: scale(1.02);
+}
+
+.forecast-image-container img {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.forecast-image-container img:hover {
+    transform: scale(1.05);
+}
