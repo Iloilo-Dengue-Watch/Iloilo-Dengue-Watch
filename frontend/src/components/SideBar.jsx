@@ -38,8 +38,8 @@ export default function SideBarComponent({tabChosen}) {
                     <Sidebar.Item as={Link} to="/news" icon={HiUser} className = {`${tabChosen === "News" ? 'bg-blue-500' : ''} `}>
                         News
                     </Sidebar.Item>
-                    <Sidebar.Item as={Link} to="/feedback" icon={HiDocumentText} className = {`${tabChosen === "Feedback" ? 'bg-blue-500' : ''} `}> {/* New feedback item */}
-                        Feedback
+                    <Sidebar.Item as={Link} to="/contribute" icon={HiDocumentText} className = {`${tabChosen === "Contribute" ? 'bg-blue-500' : ''} `}> {/* New feedback item */}
+                        Contribute
                     </Sidebar.Item>
                 </Sidebar.ItemGroup>
             </Sidebar.Items>
