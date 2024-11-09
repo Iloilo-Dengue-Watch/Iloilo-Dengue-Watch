@@ -8,7 +8,7 @@ export default function PlayGround({ handleTabChange }) {
     }, [handleTabChange]);
 
     return (
-        <div>
+        <div className='mb-10'>
             <h1 className='text-center text-3xl font-bold mt-12 mb-20'>Welcome to the Playground!</h1>
             <div className="space-y-12">
                 <SIRInfo />
@@ -24,7 +24,7 @@ function SIRInfo() {
             <div className="lg:max-w-7xl max-w-lg mx-auto px-6 py-8 bg-white rounded-lg shadow-md">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
                     <div className="max-h-80">
-                        <img src="/public/PlayGround/SIR.png" alt="SIR Model" className="rounded-md object-cover w-full h-full" />
+                        <img src="/PlayGround/SIR.png" alt="SIR Model" className="rounded-md object-cover w-full h-full" />
                     </div>
                     <div>
                         <h2 className="text-3xl font-extrabold text-purple-700 mb-4">Compartmental SIR Model</h2>
@@ -66,7 +66,7 @@ function NetLogoInfo() {
                         </div>
                     </div>
                     <div className="max-h-80">
-                        <img src="/public/PlayGround/NetLogo.png" alt="Agent-Based Model" className="rounded-md object-cover w-full h-full" />
+                        <img src="/PlayGround/NetLogo.png" alt="Agent-Based Model" className="rounded-md object-cover w-full h-full" />
                     </div>
                 </div>
             </div>

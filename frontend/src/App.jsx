@@ -11,19 +11,21 @@ import PlayGround from './components/Playground/PlayGround.jsx';
 import Submit from "./SubmitComponents/Submit.jsx";
 import Contribute from "./components/Contribute/Contribute.jsx";
 import SIR from './components/Playground/SIR.jsx';
+import SignUp from './SubmitComponents/SignUp.jsx';
+import LogIn from './SubmitComponents/LogIn.jsx';
+import { useCsrfToken } from './CrsfTokenContext.jsx';
 function MainContent({ isVisible, handleTabChange, handleWebsiteChange }) {
     const location = useLocation();
 
-
     useEffect(() => {
-        if (location.pathname === '/submit') {
+        if (location.pathname.startsWith('/submit')) {
             handleWebsiteChange('Submit');
         } else {
             handleWebsiteChange('Main');
         }
     }, [location, handleWebsiteChange]);
 
-    const isSubmitRoute = location.pathname === '/submit';
+    const isSubmitRoute = location.pathname.startsWith('/submit');
 
     return (
         <div
@@ -40,8 +42,9 @@ function MainContent({ isVisible, handleTabChange, handleWebsiteChange }) {
                 <Route path="/general-information" element={<GeneralInfo handleTabChange={handleTabChange} />} />
                 <Route path="/contribute" element={<Contribute handleTabChange={handleTabChange} />} />
                 <Route path="/playground" element={<PlayGround handleTabChange={handleTabChange} />} />
-                <Route path="/submit" element={<Submit />} />
+                <Route path="/submit/*" element={<Submit />} />
                 <Route path="/playground/sir" element={<SIR />} />
+                <Route path="/submit/signup" element={<SignUp />} />
             </Routes>
         </div>
     );
@@ -53,7 +56,7 @@ export default function App() {
     const lastScrollY = useRef(0);
     const [tabChosen, setTabChosen] = useState('Home');
     const [website, setWebsite] = useState('Main');
-
+    const {setCsrfToken} = useCsrfToken();
     const handleWebsiteChange = (newWebsite) => setWebsite(newWebsite);
     const handleResize = () => setIsLargerScreen(window.innerWidth >= 768);
 
@@ -65,6 +68,22 @@ export default function App() {
             lastScrollY.current = currentScrollY;
         }
     };
+      // Fetch CSRF token when component mounts
+  useEffect(() => {
+    const fetchCsrfToken = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/users/get-csrf-token/', {
+          credentials: 'include', // Ensures cookies are included in requests
+        });
+        const data = await response.json();
+        setCsrfToken(data.csrfToken);
+        console.log('CSRF token fetched:', data.csrfToken);
+      } catch (error) {
+        console.error('Failed to fetch CSRF token:', error);
+      }
+    };
+    fetchCsrfToken();
+  }, [setCsrfToken]);
 
     useEffect(() => {
         window.addEventListener('resize', handleResize);
