@@ -9,10 +9,10 @@ import {
     MessageInput,
     ChatContainer
 } from '@chatscope/chat-ui-kit-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaRobot, FaUser } from 'react-icons/fa';
-import { useEffect } from 'react';
-export default function Chat({handleTabChange}) {
+
+export default function Chat({ handleTabChange }) {
     const [messages, setMessages] = useState([  // State for messages
         {
             type: 'text',
@@ -25,9 +25,11 @@ export default function Chat({handleTabChange}) {
         }
     ]);
     const [isTyping, setIsTyping] = useState(false);
+
     useEffect(() => {
         handleTabChange("Chat");
     }, [handleTabChange]);
+
     const handleSend = async (userMessage) => {
         // Add the user's message to the chat
         setMessages(prevMessages => [
@@ -82,8 +84,8 @@ export default function Chat({handleTabChange}) {
                 <p className="text-gray-700">Powered by <a href="https://openai.com/blog/openai-api/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">OpenAI API</a></p>
                 <p className="text-gray-700">Note: Use ChatGPT 4 responsibly. They may produce inaccurate results.</p>
             </div>
-            <MainContainer className="w-full max-w-4xl bg-white rounded-lg shadow-lg">
-                <ChatContainer style={{ height: '500px' }}>
+            <MainContainer className="!w-full max-w-6xl bg-white rounded-lg shadow-lg">
+                <ChatContainer style={{ height: '600px', width: '100%' }}>
                     <ConversationHeader>
                         <Avatar
                             name="ChatGPT 4"

@@ -41,6 +41,9 @@ export default function SideBarComponent({tabChosen}) {
                     <Sidebar.Item as={Link} to="/contribute" icon={HiDocumentText} className = {`${tabChosen === "Contribute" ? 'bg-blue-500' : ''} `}> {/* New feedback item */}
                         Contribute
                     </Sidebar.Item>
+                    <Sidebar.Item as={Link} to="/playground" icon={HiUser} className = {`${tabChosen === "playground" ? 'bg-blue-500' : ''} `}> {/* New feedback item */}
+                        Playground
+                    </Sidebar.Item>
                 </Sidebar.ItemGroup>
             </Sidebar.Items>
             <Sidebar.CTA className={`${isClosed ? 'hidden': ''}`}>

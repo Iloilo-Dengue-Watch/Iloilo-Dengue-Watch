@@ -12,7 +12,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { useEffect, useState } from 'react';
-
+import HeatMap from './HeatMap';
 function Data({handleTabChange}) {
   const [weatherData, setWeatherData] = useState({ temperature: [], date: [], precipitation : [], humidity: [] });
   useEffect(() => {
@@ -63,6 +63,9 @@ function Data({handleTabChange}) {
         </div>
         <div>
             <WeatherChart data = {weatherData} />
+        </div>
+        <div>
+          <HeatMap />
         </div>
 
         <div className="mt-12 text-center container md:px-5">
