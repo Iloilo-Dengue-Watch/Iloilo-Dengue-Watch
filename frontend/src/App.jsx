@@ -85,7 +85,7 @@ export default function App() {
                 {isLargerScreen && website === 'Main' ? (
                     <SideBarComponent tabChosen={tabChosen} />
                 ) : (
-                    website === 'Main' && <Navbar />
+                    website === 'Main' && <Navbar isVisible={isVisible}/>
                 )}
                 <MainContent isVisible={isVisible && !isLargerScreen} handleTabChange={handleTabChange} handleWebsiteChange={handleWebsiteChange} />
             </div>
