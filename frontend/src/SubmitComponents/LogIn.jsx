@@ -20,7 +20,7 @@ export default function LogIn() {
     }
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/users/login/', {
+      const response = await fetch('https://dengue-watch-backend-f59b9593b035.herokuapp.com/users/login/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

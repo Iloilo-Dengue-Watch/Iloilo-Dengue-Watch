@@ -4,7 +4,12 @@ mark{
     padding: 0.2em !important; /* Optional: Add some padding for better appearance */
     border-radius: 0.2em !important; /* Optional: Add rounded corners */
 }
-h2 {
+h2,h3,h4 {
+    margin-top: 1rem !important;
     text-align: center;
     margin-bottom: 1rem !important;
+    font-weight: 700 !important;
+}
+p {
+    margin-top: 1rem !important;
 }

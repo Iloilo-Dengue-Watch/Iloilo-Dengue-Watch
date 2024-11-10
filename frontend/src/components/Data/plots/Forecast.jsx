@@ -61,33 +61,9 @@ export default function Forecast() {
     const isLoading = loadingImage || loadingData; // Determine if either image or data is still loading
 
     return (
-        <Grid container spacing={2} className='px-5'>
-            <Grid 
-                item 
-                xs={12} 
-                md={3} 
-                className={`md:!mt-20 transform transition-transform duration-1000 ${transition ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`} // Conditional classes for transition
-            > 
-                <Typography variant="h4" component="h2" className="text-gray-800 mb-4 font-bold text-center md:text-left">
-                    Dengue Case Forecast
-                </Typography>
-                
-                <Typography 
-                    variant="body1" 
-                    className={`text-gray-600 mb-6 text-center md:text-justify transition-opacity duration-500 ${showFirstText ? 'opacity-100' : 'opacity-0'}`} // Transition for first text
-                >
-                    A forecast of dengue cases over time, factoring in environmental data.
-                </Typography>
-                
-                <Typography 
-                    variant='body1' 
-                    className={`md:text-justify text-center transition-opacity duration-500 ${showSecondText ? 'opacity-100' : 'opacity-0'}`} // Transition for second text
-                >
-                    This helps in proactive public health management by providing predictive insights.
-                </Typography>
-            </Grid>
+        <div className='flex justify-center-center h-full bg-white'>
             
-            <Grid item xs={12} md={9}> {/* Right column takes 80% on medium screens and above */}
+            <div className='w-full'> {/* Right column takes 80% on medium screens and above */}
                 {isLoading ? ( // Check if loading
                     <Box 
                         display='flex' 
@@ -104,32 +80,31 @@ export default function Forecast() {
                                 <img 
                                     src={imgForecast} 
                                     alt="Forecast" 
-                                    className="rounded-lg shadow-lg w-full max-h-96 cursor-pointer transition-transform duration-300"
+                                    className="rounded-lg w-full max-h-96 cursor-pointer transition-transform duration-300"
                                     onClick={() => setOpen(true)} 
                                 />
                                 <p className="text-center m-2 text-gray-500 italic">Click the image to enlarge</p>
                                 <p className="text-center m-2">The model used for this is the Prophet model by Meta.</p>
                             </div>
-                            <Grid item xs={12} sm={4}>
-                                <Box className="bg-opacity-60 w-full px-2">
-                                    <Card className="bg-cyan-700">
-                                        {prediction.map((data, index) => (
-                                            <CardContent key={index} className="border-b border-cyan-500 last:border-0">
-                                                <Typography variant="h6" component="h2">
-                                                    {data.date}
-                                                </Typography>
-                                                <Typography variant="body1">
-                                                    Forecast: {data.y}
-                                                </Typography>
-                                            </CardContent>
-                                        ))}
-                                    </Card>
-                                </Box>
-                            </Grid>
+                            
+                        </div>
+                        <div className='grid grid-flow-row grid-cols-4 gap-2'>
+                            {prediction.map(prediction => (
+                                <Card key={prediction.date} className="mb-4">
+                                    <CardContent>
+                                        <Typography variant="h6" component="h2" className="text-gray-800">
+                                            {prediction.date}
+                                        </Typography>
+                                        <Typography variant="body1" className="text-gray-600">
+                                            Predicted Dengue Cases: {prediction.y}
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            ))}
                         </div>
                     </div>
                 )}
-            </Grid>
+            </div>
 
             {/* Modal for full-screen image view */}
             <Modal
@@ -143,6 +118,6 @@ export default function Forecast() {
                     style={{ maxWidth: '90%', maxHeight: '90%', objectFit: 'contain' }} 
                 />
             </Modal>
-        </Grid>
+        </div>
     );
 }

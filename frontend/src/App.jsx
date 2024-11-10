@@ -72,7 +72,7 @@ export default function App() {
   useEffect(() => {
     const fetchCsrfToken = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/users/get-csrf-token/', {
+        const response = await fetch('https://dengue-watch-backend-f59b9593b035.herokuapp.com/users/get-csrf-token/', {
           credentials: 'include', // Ensures cookies are included in requests
         });
         const data = await response.json();

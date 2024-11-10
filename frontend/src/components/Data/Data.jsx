@@ -13,8 +13,11 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { useEffect, useState } from 'react';
 import HeatMap from './HeatMap';
+import WeatherDengue from './WeatherDengue';
+import WeatherCharts from './WeatherCharts';
 function Data({handleTabChange}) {
   const [weatherData, setWeatherData] = useState({ temperature: [], date: [], precipitation : [], humidity: [] });
+  const [GPT_response, setGPT_response] = useState('');
   useEffect(() => {
     fetch('https://dengue-watch-backend-f59b9593b035.herokuapp.com/ml/weather_data_year/')
         .then(response => response.json())
@@ -37,15 +40,24 @@ function Data({handleTabChange}) {
         .catch(error => console.log(error));
 }, []);
   useEffect(() => {
+    fetch('https://dengue-watch-backend-f59b9593b035.herokuapp.com/ml/chat_weather_summary')
+      .then(response => response.json())
+      .then(data => setGPT_response(data.response))
+      .catch(error => console.log(error));
+  }, []);
+
+  useEffect(() => {
   handleTabChange("Data");
   }, [handleTabChange]);
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-100 to-blue-300 py-8 lg:px-16">
-      <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center sticky">Data Prediction and Forecasting</h1>
-
-          <div className="mt-8 flex flex-col items-center">
+    <div className="min-h-screen bg-gradient-to-r from-blue-100 to-blue-300 py-8 p-4 lg:px-10 mt-3">
+      <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center lg:!text-left sticky">Dengue Data Dashboard</h1>
+          <WeatherCard />
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-10">
             <Forecast />
+            <WeatherDengue content={GPT_response} />
           </div>
+          <WeatherCharts data={weatherData}/>
 
           <div className="mt-8">
             <Typography variant="h4" component="h2" className="text-red-600 mb-4 font-bold">
@@ -57,18 +69,18 @@ function Data({handleTabChange}) {
             <Warning />
           </div>
       <div className="p-2 lg:p-12">
-        <div className="flex flex-col items-center">
-          <WeatherCard />
-
-        </div>
-        <div>
-            <WeatherChart data = {weatherData} />
-        </div>
         <div>
           <HeatMap />
         </div>
-
-        <div className="mt-12 text-center container md:px-5">
+        <MLInfo />
+        
+      </div>
+    </div>
+  );
+}
+function MLInfo(){
+  return(
+<div className="mt-12 text-center container md:px-5">
           <Typography variant="h3" component="h1" className="text-blue-600 mb-4 font-bold">
             Machine Learning Model Overview
           </Typography>
@@ -132,9 +144,6 @@ function Data({handleTabChange}) {
           </Box>
 
         </div>
-      </div>
-    </div>
-  );
+  )
 }
-
 export default Data;

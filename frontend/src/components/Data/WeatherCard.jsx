@@ -1,11 +1,8 @@
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { useState, useEffect } from 'react';
 import { WiThermometer, WiHumidity, WiRain } from 'weather-icons-react';
-import WeatherDengue from "./WeatherDengue.jsx";
-// Import the date formatting library (optional)
 import { format } from 'date-fns';
 
 export default function WeatherCard() {
@@ -14,65 +11,66 @@ export default function WeatherCard() {
         humidity: '',
         precipitation: ''
     });
-    const [gpt_response, setGPT_response] = useState('');
-    // Get today's date
-    const today = format(new Date(), 'eeee, MMMM d, yyyy'); // Example: "Saturday, October 12, 2024"
+    const today = format(new Date(), 'eeee, MMMM d, yyyy');
 
     useEffect(() => {
         fetch('https://dengue-watch-backend-f59b9593b035.herokuapp.com/ml/weather/')
             .then(response => response.json())
             .then(data => setWeather(data))
-            .catch(error => console.log(error))
-        fetch('https://dengue-watch-backend-f59b9593b035.herokuapp.com/ml/chat_weather_summary')
-            .then(response => response.json())
-            .then(data => setGPT_response(data.response))
-            .catch(error => console.log(error))
+            .catch(error => console.log(error));
     }, []);
 
     return (
-        <div className="flex flex-col xl:flex-row justify-center items-center lg:items-start gap-10 lg:p-5">
-            {/* Weather Card */}
-            <Box>
-                <Card sx={{ minWidth: 300, maxWidth: 345, minHeight: 450, backgroundColor: 'rgba(255, 255, 255, 0.9)', boxShadow: 3, borderRadius: 2 }}>
-                    <CardContent>
-                        <Typography variant="h4" component="div" gutterBottom className="text-center text-gray-800">
+        <div className="w-full">
+            <Card sx={{ padding: 3, boxShadow: 3, borderRadius: 2, backgroundColor: '#f9f9fc', width: '100%' }}>
+                <CardContent>
+                    {/* Header */}
+                    <div className="bg-purple-100 p-3 rounded-md mb-4 text-center">
+                        <Typography variant="h5" component="div" color="textPrimary">
                             Iloilo City, Iloilo, Philippines
                         </Typography>
+                        <Typography variant="subtitle1" color="textSecondary">
+                            {today}
+                        </Typography>
+                    </div>
 
-                        {/* Beautiful Date Display */}
-                        <Box textAlign="center" mb={2}>
-                            <Typography variant="h6" sx={{ fontStyle: 'italic', color: '#9c27b0' }}>
-                                {today}
+                    {/* Weather Information Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                        {/* Temperature */}
+                        <div className="flex flex-col items-center">
+                            <WiThermometer size={48} color="#ff5722" />
+                            <Typography variant="body2" color="textSecondary">
+                                Temperature
                             </Typography>
-                        </Box>
-
-                        {/* Weather Information */}
-                        <Box display="flex" alignItems="center" mb={2}>
-                            <WiThermometer size={32} color="#ff5722" />
-                            <Typography variant="h6" component="div" ml={1}>
-                                Temperature: {weather.temperature + "°C"}
+                            <Typography variant="h5" color="primary">
+                                {weather.temperature ? `${weather.temperature}°C` : 'N/A'}
                             </Typography>
-                        </Box>
+                        </div>
 
-                        <Box display="flex" alignItems="center" mb={2}>
-                            <WiHumidity size={32} color="#2196f3" />
-                            <Typography variant="h6" component="div" ml={1}>
-                                Humidity: {weather.humidity + "%"}
+                        {/* Humidity */}
+                        <div className="flex flex-col items-center">
+                            <WiHumidity size={48} color="#2196f3" />
+                            <Typography variant="body2" color="textSecondary">
+                                Humidity
                             </Typography>
-                        </Box>
-
-                        <Box display="flex" alignItems="center">
-                            <WiRain size={32} color="#4caf50" />
-                            <Typography variant="h6" component="div" ml={1}>
-                                Total Precipitation: {weather.precipitation + "mm"}
+                            <Typography variant="h5" color="primary">
+                                {weather.humidity ? `${weather.humidity}%` : 'N/A'}
                             </Typography>
-                        </Box>
-                    </CardContent>
-                </Card>
-            </Box>
+                        </div>
 
-            {/* Weather Dengue Content */}
-            <WeatherDengue content={gpt_response} />
+                        {/* Precipitation */}
+                        <div className="flex flex-col items-center">
+                            <WiRain size={48} color="#4caf50" />
+                            <Typography variant="body2" color="textSecondary">
+                                Total Precipitation
+                            </Typography>
+                            <Typography variant="h5" color="primary">
+                                {weather.precipitation ? `${weather.precipitation} mm` : 'N/A'}
+                            </Typography>
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
         </div>
     );
 }

@@ -12,7 +12,7 @@ export function AuthProvider({ children }) {
 
   const logOut = async () => {
     try {
-      const response = await axios.post('http://127.0.0.1:8000/users/logout/', {}, {
+      const response = await axios.post('https://dengue-watch-backend-f59b9593b035.herokuapp.com/users/logout/', {}, {
         headers: {
           'X-CSRFToken': csrfToken,
         },

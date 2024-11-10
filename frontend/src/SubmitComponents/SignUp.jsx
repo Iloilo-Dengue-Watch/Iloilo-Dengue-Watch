@@ -35,7 +35,7 @@ export default function SignUp() {
     }
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/users/create-user/', {
+      const response = await fetch('https://dengue-watch-backend-f59b9593b035.herokuapp.com/users/create-user/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

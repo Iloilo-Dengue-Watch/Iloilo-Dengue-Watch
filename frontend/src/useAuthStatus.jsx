@@ -11,7 +11,7 @@ const useAuthStatus = () => {
     const checkAuthStatus = async () => {
       setLoading(true);
       try {
-        const response = await axios.get('http://127.0.0.1:8000/users/check-auth-status/', {
+        const response = await axios.get('https://dengue-watch-backend-f59b9593b035.herokuapp.com/users/check-auth-status/', {
           withCredentials: true,
         });
         setIsAuthenticated(response.data.isAuthenticated);

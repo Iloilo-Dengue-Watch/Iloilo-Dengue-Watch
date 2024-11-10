@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
-
+import {MovingComponent} from 'react-moving-text';
 const teamMembers = [
     {
         name: 'Miguel Angelo Bondad',
@@ -35,15 +35,26 @@ const teamMembers = [
     //}
 ];
 
-export default function MeetTheTeam() {
+export default function MeetTheTeam({onScreen}) {
     return (
+        <>
         <Box className = "p-8 md:p-20 flex flex-col !align-middle !justify-center items-center mt-8">
             <Typography variant="h4" component="div" gutterBottom className="text-center text-gray-800 mb-4">
                 Meet the Team
             </Typography>
+            {onScreen && 
             <div className="grid grid-cols-1 md:grid-cols-3 md:gap-x-10"> {/* Reduced spacing from 4 to 2 */}
                 {teamMembers.map((member, index) => (
-                    <div className='my-4 md:mx-4' key={index}>
+                    <MovingComponent
+                    type="fadeInFromBottom"
+                    duration="1000ms"
+                    delay={index * 0.5 +'s'}
+                    direction="normal"
+                    timing="ease-in-out"
+                    iteration="1"
+                    fillMode="backwards"
+                    key={index}>
+                    <div className='my-4 md:mx-4'>
                         <div className="border rounded-md overflow-hidden max-md:max-w-[300px]">
                         <img src={member.image} className="w-full h-60 object-contain object-top bg-gray-200" />
 
@@ -84,8 +95,11 @@ export default function MeetTheTeam() {
                         </div>
                     </div>
                     </div>
+                    </MovingComponent>
+                    
                 ))}
-            </div>
+            </div>}
         </Box>
+        </>
     );
 }

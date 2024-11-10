@@ -1,31 +1,22 @@
 import { useEffect, useState } from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import { useMediaQuery } from '@mui/material';
+import { Card, CardContent, Typography, Box } from '@mui/material';
 
 export default function Warning() {
     const imageURL = "https://dengue-watch-backend-f59b9593b035.herokuapp.com/ml/forecast/?image=warning";
     const warningURL = "https://dengue-watch-backend-f59b9593b035.herokuapp.com/ml/forecast/?data=warning";
     const [imgForecast, setImgForecast] = useState(null);
     const [prediction, setPrediction] = useState([]);
-
+    
     const warningThreshold = 10; // Adjust this value based on your preference
 
     useEffect(() => {
         fetch(warningURL)
             .then(response => response.json())
             .then(data => {
-                // Transform data into array for warnings and round values
                 const transformedData = Object.entries(data).map(([date, values]) => ({
-                    date: formatDate(date), // Format the date here
-                    y: Math.round(values.y), // Round actual value
-                    yhat_upper: Math.round(values.yhat_upper) // Round forecast upper bound
+                    date: formatDate(date),
+                    y: Math.round(values.y),
+                    yhat_upper: Math.round(values.yhat_upper)
                 }));
                 setPrediction(transformedData);
             })
@@ -40,67 +31,52 @@ export default function Warning() {
             .catch(error => console.log("Error fetching image:", error));
     }, []);
 
-    // Function to format date from 'YYYY-MM-DD' to 'Month Day, Year'
     const formatDate = (dateString) => {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         return new Date(dateString).toLocaleDateString('en-US', options);
     };
 
     return (
-        <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-lg max-w-4xl mx-auto my-8">
-            <Typography variant="h4" component="h1" className="text-center font-bold mb-6">
-                Dengue Warning
-            </Typography>
-
+        <div className="grid grid-cols-1 lg:grid-cols-2 p-4 bg-white rounded-lg shadow-lg mx-auto my-8 w-full gap-4">
             <div className="w-full max-w-3xl mb-6">
-                <img src={imgForecast} alt="Forecast" className="rounded-lg shadow-lg w-full max-h-96 object-cover mb-4" />
-                <Typography variant="body1" className="text-center">
-                    The model used for this is the Prophet model by Meta.
-                </Typography>
+                <img src={imgForecast} alt="Forecast" className="rounded-lg shadow-lg w-full object-cover mb-4" />
             </div>
 
-            <div className="overflow-x-auto w-full max-w-3xl border-2 p-4">
-                <div className="w-full max-w-3xl mb-6">
-                    <Typography variant="h6" component="h2" className="text-center font-bold mb-4">
-                        Data Points Exceeding Warning Threshold
-                    </Typography>
-                </div>
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="warning table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Date</TableCell>
-                                <TableCell align="right">Actual Value (y)</TableCell>
-                                <TableCell align="right">Forecast Upper Bound</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {prediction.length > 0 ? (
-                                prediction.map((data) => (
-                                    <TableRow
-                                        key={data.date}
-                                        sx={{
-                                            '&:last-child td, &:last-child th': { border: 0 },
-                                            backgroundColor: data.y > data.yhat_upper ? '#ffebee' : 'inherit' // Highlight rows exceeding threshold
-                                        }}
-                                    >
-                                        <TableCell component="th" scope="row">
-                                            {data.date}
-                                        </TableCell>
-                                        <TableCell align="right">{data.y}</TableCell>
-                                        <TableCell align="right">{data.yhat_upper}</TableCell>
-                                    </TableRow>
-                                ))
-                            ) : (
-                                <TableRow>
-                                    <TableCell colSpan={3} className="text-center">
-                                        No warnings to display.
-                                    </TableCell>
-                                </TableRow>
-                            )}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {prediction.length > 0 ? (
+                    prediction.map((data) => (
+                        <Card
+                            key={data.date}
+                            sx={{
+                                backgroundColor: data.y > data.yhat_upper ? '#ffebee' : '#f5f5f5',
+                                width: '100%',
+                                boxShadow: 3
+                            }}
+                        >
+                            <CardContent>
+                                <Typography variant="h6" component="div">
+                                    {data.date}
+                                </Typography>
+                                <Box mt={1}>
+                                    <Typography variant="body1" color="text.secondary">
+                                        Actual Value (y): {data.y}
+                                    </Typography>
+                                    <Typography variant="body1" color="text.secondary">
+                                        Forecast Upper Bound: {data.yhat_upper}
+                                    </Typography>
+                                </Box>
+                            </CardContent>
+                        </Card>
+                    ))
+                ) : (
+                    <Card sx={{ width: '100%', boxShadow: 3 }}>
+                        <CardContent>
+                            <Typography variant="body1" align="center">
+                                No warnings to display.
+                            </Typography>
+                        </CardContent>
+                    </Card>
+                )}
             </div>
         </div>
     );

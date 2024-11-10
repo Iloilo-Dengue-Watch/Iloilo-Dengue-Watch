@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { GoogleMap, useJsApiLoader, HeatmapLayerF } from '@react-google-maps/api';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { GoogleMap, HeatmapLayerF, LoadScript } from '@react-google-maps/api';
+import WordCloud from 'wordcloud';
 
 const containerStyle = {
   width: '100%',
@@ -11,94 +12,119 @@ const center = {
   lng: 122.5621,
 };
 
-// Define the libraries array outside of the component
 const libraries = ['visualization'];
 
 export default function HeatMap() {
-  const { isLoaded, loadError } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: import.meta.env.VITE_MAPS_KEY,
-    libraries, // Use the static libraries array
-  });
-
   const [heatmapData, setHeatmapData] = useState([]);
+  const wordCloudCanvas = useRef(null);
+  const [map, setMap] = useState(null); // Manage map state
 
   useEffect(() => {
-    // Example heatmap data (lat, lng)
-    const data = [
-      { lat: 10.7202, lng: 122.5621 },
-      { lat: 10.7212, lng: 122.5631 },
-      { lat: 10.7222, lng: 122.5641 },
-      { lat: 10.7232, lng: 122.5651 },
-      { lat: 10.7242, lng: 122.5661 },
-      { lat: 10.7252, lng: 122.5671 },
-      { lat: 10.7262, lng: 122.5681 },
-      { lat: 10.7272, lng: 122.5691 },
-      { lat: 10.7282, lng: 122.5701 },
-      { lat: 10.7292, lng: 122.5711 },
-      { lat: 10.7302, lng: 122.5721 },
-      { lat: 10.7312, lng: 122.5731 },
-      { lat: 10.7322, lng: 122.5741 },
-      { lat: 10.7332, lng: 122.5751 },
-      { lat: 10.7342, lng: 122.5761 },
-      { lat: 10.7352, lng: 122.5771 },
-      { lat: 10.7362, lng: 122.5781 },
-      { lat: 10.7372, lng: 122.5791 },
-      { lat: 10.7382, lng: 122.5801 },
-      { lat: 10.7392, lng: 122.5811 },
-      {lat: 10.7402, lng: 122.5821},
-        {lat: 10.7012, lng: 122.5831},
-      // Add more data points here
+    // Fetch heatmap data
+    fetch(`http://localhost:8000/users/self-report/get`)
+      .then((response) => response.json())
+      .then((data) => {
+        const heatmapData = data.reports.map((item) => ({
+          lat: parseFloat(item.lat),
+          lng: parseFloat(item.lng),
+        }));
+        console.log("Heatmap Data:", heatmapData); 
+        setHeatmapData(heatmapData);
+      })
+      .catch((error) => console.error("Error fetching heatmap data:", error));
+
+    // Word cloud data
+    const wordCloudData = [
+      { text: 'Fever', weight: 30 },
+      { text: 'Headache', weight: 25 },
+      { text: 'Pain Behind Eyes', weight: 22 },
+      { text: 'Nausea', weight: 20 },
+      // ... other word cloud items
     ];
 
-    setHeatmapData(data);
+    if (wordCloudCanvas.current) {
+      WordCloud(wordCloudCanvas.current, {
+        list: wordCloudData.map(item => [item.text, item.weight]),
+        gridSize: 10,
+        weightFactor: 5,
+        fontFamily: 'Times, serif',
+        color: 'random-dark',
+        minSize: 12,
+      });
+    }
   }, []);
 
-  const [map, setMap] = useState(null);
-
-  const onLoad = useCallback(function callback(map) {
+  const onLoad = useCallback((map) => {
     const bounds = new window.google.maps.LatLngBounds(center);
     map.fitBounds(bounds);
-
     setMap(map);
   }, []);
 
-  const onUnmount = useCallback(function callback(map) {
+  const onUnmount = useCallback(() => {
     setMap(null);
   }, []);
 
-  if (loadError) {
-    return <div>Error loading maps</div>;
-  }
+  useEffect(() => {
+    if (map) {
+      // Set zoom level after the map has been loaded
+      const timeoutId = setTimeout(() => {
+        if (map) {
+          console.log('Setting zoom level to 5');
+          map.setZoom(5);
+        }
+      }, 2000); // Delay for 2 seconds
 
-  return isLoaded ? (
-    <GoogleMap
-      mapContainerStyle={containerStyle}
-      center={center}
-      zoom={10} // Adjusted zoom level to not zoom in too much initially
-      onLoad={onLoad}
-      onUnmount={onUnmount}
-      options={{
-        streetViewControl: false, // Remove OpenStreetView control
-        draggable: false, // Lock the map so it can't be dragged
-        disableDoubleClickZoom: true, // Optionally disable double-click zooming
-      }}
-    >
-      {/* Heatmap Layer */}
-      {heatmapData.length > 0 && (
-        <HeatmapLayerF
-          data={heatmapData.map(
-            (point) => new window.google.maps.LatLng(point.lat, point.lng)
-          )}
-          options={{
-            radius: 20,   // Radius of each "heat" point
-            opacity: 0.6, // Opacity of the heatmap
-            maxIntensity: 1, // Maximum intensity of the heatmap
+      // Cleanup timeout if map is unmounted
+      return () => clearTimeout(timeoutId);
+    }
+  }, [map]); // This effect runs when the `map` state changes
+
+  return (
+    <LoadScript googleMapsApiKey={import.meta.env.VITE_MAPS_KEY} libraries={libraries}>
+      <div className='grid grid-cols-2'>
+        <div>
+          <h1 className='text-4xl font-bold text-gray-800 mb-8 text-center'>
+            Self Reported Dengue Cases Heatmap
+          </h1>
+          <GoogleMap
+            mapContainerStyle={containerStyle}
+            center={center}
+            zoom={2} // Initial zoom level before map loads
+            onLoad={onLoad}
+            onUnmount={onUnmount}
+            options={{
+              streetViewControl: false, 
+            }}
+          >
+            {heatmapData.length > 0 && (
+              <HeatmapLayerF
+                data={heatmapData.map(
+                  (point) => new window.google.maps.LatLng(point.lat, point.lng)
+                )}
+                options={{
+                  radius: 20,
+                  opacity: 0.6,
+                  maxIntensity: 1,
+                }}
+              />
+            )}
+          </GoogleMap>
+        </div>
+        <div
+          style={{
+            padding: '20px',
+            height: '800px',
+            overflowY: 'auto',
+            overflowX: 'auto',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
-        />
-      )}
-    </GoogleMap>
-  ) : (
-    <div>Loading...</div>
+          className='rounded-lg'
+        >
+          <canvas ref={wordCloudCanvas} width="500" height="500" />
+        </div>
+      </div>
+    </LoadScript>
   );
 }

@@ -9,7 +9,4 @@ export default defineConfig({
     key: 'key.pem'
   })
   ],
-  server: {
-    https: true
-  }
 })
