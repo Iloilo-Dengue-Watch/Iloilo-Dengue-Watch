@@ -24,7 +24,16 @@ function SIRInfo() {
             <div className="lg:max-w-7xl max-w-lg mx-auto px-6 py-8 bg-white rounded-lg shadow-md">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
                     <div className="max-h-80">
-                        <img src="/PlayGround/SIR.png" alt="SIR Model" className="rounded-md object-cover w-full h-full" />
+                    <video className="rounded-md object-cover w-full h-full" autoPlay
+                        muted
+                        playsInline
+                        onEnded={(e) => {
+                            e.target.currentTime = 0;
+                            e.target.play();
+                        }}>
+                          <source src="/PlayGround/SIR.mp4" type="video/mp4" />
+                          Your browser does not support the video tag.
+                        </video>
                     </div>
                     <div>
                         <h2 className="text-3xl font-extrabold text-purple-700 mb-4">Compartmental SIR Model</h2>
@@ -66,7 +75,16 @@ function NetLogoInfo() {
                         </div>
                     </div>
                     <div className="max-h-80">
-                        <img src="/PlayGround/NetLogo.png" alt="Agent-Based Model" className="rounded-md object-cover w-full h-full" />
+                        <video className="rounded-md object-cover w-full h-full" autoPlay
+                        muted
+                        playsInline
+                        onEnded={(e) => {
+                            e.target.currentTime = 0;
+                            e.target.play();
+                        }}>
+                          <source src="/PlayGround/NetLogo.mp4" type="video/mp4" />
+                          Your browser does not support the video tag.
+                        </video>
                     </div>
                 </div>
             </div>

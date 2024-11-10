@@ -16,8 +16,9 @@ const libraries = ['visualization'];
 
 export default function HeatMap() {
   const [heatmapData, setHeatmapData] = useState([]);
+  const [loading, setLoading] = useState(true); // Add loading state
   const wordCloudCanvas = useRef(null);
-  const [map, setMap] = useState(null); // Manage map state
+  const [map, setMap] = useState(null);
 
   useEffect(() => {
     // Fetch heatmap data
@@ -28,10 +29,14 @@ export default function HeatMap() {
           lat: parseFloat(item.lat),
           lng: parseFloat(item.lng),
         }));
-        console.log("Heatmap Data:", heatmapData); 
+        console.log("Heatmap Data:", heatmapData);
         setHeatmapData(heatmapData);
+        setLoading(false); // Set loading to false once data is fetched
       })
-      .catch((error) => console.error("Error fetching heatmap data:", error));
+      .catch((error) => {
+        console.error("Error fetching heatmap data:", error);
+        setLoading(false); // Set loading to false in case of error
+      });
 
     // Word cloud data
     const wordCloudData = [
@@ -42,7 +47,8 @@ export default function HeatMap() {
       // ... other word cloud items
     ];
 
-    if (wordCloudCanvas.current) {
+    // Initialize WordCloud only when canvas and window.WordCloud are available
+    if (wordCloudCanvas.current && typeof window !== 'undefined' && window.WordCloud) {
       WordCloud(wordCloudCanvas.current, {
         list: wordCloudData.map(item => [item.text, item.weight]),
         gridSize: 10,
@@ -77,38 +83,53 @@ export default function HeatMap() {
       // Cleanup timeout if map is unmounted
       return () => clearTimeout(timeoutId);
     }
-  }, [map]); // This effect runs when the `map` state changes
+  }, [map]);
 
   return (
-    <LoadScript googleMapsApiKey={import.meta.env.VITE_MAPS_KEY} libraries={libraries}>
+    <LoadScript
+      googleMapsApiKey={import.meta.env.VITE_MAPS_KEY}
+      libraries={libraries}
+      onLoad={() => console.log('Google Maps API Loaded')}
+      onError={() => console.error('Error loading Google Maps API')}
+    >
       <div className='grid grid-cols-2'>
         <div>
           <h1 className='text-4xl font-bold text-gray-800 mb-8 text-center'>
             Self Reported Dengue Cases Heatmap
           </h1>
-          <GoogleMap
-            mapContainerStyle={containerStyle}
-            center={center}
-            zoom={2} // Initial zoom level before map loads
-            onLoad={onLoad}
-            onUnmount={onUnmount}
-            options={{
-              streetViewControl: false, 
-            }}
-          >
-            {heatmapData.length > 0 && (
-              <HeatmapLayerF
-                data={heatmapData.map(
-                  (point) => new window.google.maps.LatLng(point.lat, point.lng)
-                )}
-                options={{
-                  radius: 20,
-                  opacity: 0.6,
-                  maxIntensity: 1,
-                }}
-              />
-            )}
-          </GoogleMap>
+          {loading ? (
+            <div className="text-center">
+              <p>Loading data...</p> {/* Loading message or spinner */}
+            </div>
+          ) : (
+            <GoogleMap
+              mapContainerStyle={containerStyle}
+              center={center}
+              zoom={2} // Initial zoom level before map loads
+              onLoad={onLoad}
+              onUnmount={onUnmount}
+              options={{
+                streetViewControl: false,
+              }}
+            >
+              {heatmapData.length > 0 && (
+                <HeatmapLayerF
+                  data={heatmapData.map((point) => {
+                    if (window.google && window.google.maps) {
+                      return new window.google.maps.LatLng(point.lat, point.lng);
+                    }
+                    console.error("google.maps.LatLng is not available");
+                    return null;
+                  })}
+                  options={{
+                    radius: 20,
+                    opacity: 0.6,
+                    maxIntensity: 1,
+                  }}
+                />
+              )}
+            </GoogleMap>
+          )}
         </div>
         <div
           style={{
