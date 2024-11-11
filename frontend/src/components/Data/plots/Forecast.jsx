@@ -88,7 +88,7 @@ export default function Forecast() {
                             </div>
                             
                         </div>
-                        <div className='grid grid-flow-row grid-cols-4 gap-2'>
+                        <div className='grid grid-flow-row grid-cols-2 lg:grid-cols-4 gap-2 px-2'>
                             {prediction.map(prediction => (
                                 <Card key={prediction.date} className="mb-4">
                                     <CardContent>

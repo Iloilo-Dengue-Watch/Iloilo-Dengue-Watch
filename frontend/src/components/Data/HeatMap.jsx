@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { GoogleMap, HeatmapLayerF, LoadScript } from '@react-google-maps/api';
 import WordCloud from 'wordcloud';
-
+import ReactWordcloud from 'react-wordcloud';
 const containerStyle = {
   width: '100%',
   height: '800px',
@@ -19,10 +19,38 @@ export default function HeatMap() {
   const [loading, setLoading] = useState(true); // Add loading state
   const wordCloudCanvas = useRef(null);
   const [map, setMap] = useState(null);
-
+  const wordCloudData = [
+    { text: 'Fever', value: 30 },
+    { text: 'Headache', value: 25 },
+    { text: 'Pain Behind Eyes', value: 22 },
+    { text: 'Nausea', value: 20 },
+    { text: 'Vomiting', value: 20 },
+    { text: 'Muscle Pain', value: 18 },
+    { text: 'Joint Pain', value: 18 },
+    { text: 'Rash', value: 17 },
+    { text: 'Fatigue', value: 15 },
+    { text: 'Weakness', value: 15 },
+    { text: 'Abdominal Pain', value: 14 },
+    { text: 'Bleeding', value: 12 },
+    { text: 'Diarrhea', value: 10 },
+    { text: 'Skin Sensitivity', value: 10 },
+    { text: 'Low Platelet Count', value: 10 },
+    { text: 'Swollen Glands', value: 9 },
+    { text: 'Severe Pain', value: 9 },
+    { text: 'Chills', value: 8 },
+    { text: 'Rash', value: 7 },
+    { text: 'Dengue Fever', value: 7 },
+    { text: 'Shock', value: 6 },
+    { text: 'Dizziness', value: 6 },
+    { text: 'Red Eyes', value: 5 },
+    { text: 'Muscle Spasms', value: 5 },
+    { text: 'Severe Fatigue', value: 5 },
+    { text: 'Shortness of Breath', value: 5 },
+    { text: 'Loss of Appetite', value: 5 },
+  ];
   useEffect(() => {
     // Fetch heatmap data
-    fetch(`http://localhost:8000/users/self-report/get`)
+    fetch(`https://dengue-watch-backend-f59b9593b035.herokuapp.com/users/self-report/get`)
       .then((response) => response.json())
       .then((data) => {
         const heatmapData = data.reports.map((item) => ({
@@ -37,14 +65,15 @@ export default function HeatMap() {
         console.error("Error fetching heatmap data:", error);
         setLoading(false); // Set loading to false in case of error
       });
+  }, []);
 
+  useEffect(() => {
     // Word cloud data
     const wordCloudData = [
-      { text: 'Fever', weight: 30 },
-      { text: 'Headache', weight: 25 },
-      { text: 'Pain Behind Eyes', weight: 22 },
-      { text: 'Nausea', weight: 20 },
-      // ... other word cloud items
+      { text: 'Fever', value: 30 },
+      { text: 'Headache', value: 25 },
+      { text: 'Pain Behind Eyes', value: 22 },
+      { text: 'Nausea', value: 20 },
     ];
 
     // Initialize WordCloud only when canvas and window.WordCloud are available
@@ -58,7 +87,7 @@ export default function HeatMap() {
         minSize: 12,
       });
     }
-  }, []);
+  }, [wordCloudCanvas.current]); // Add wordCloudCanvas.current as a dependency
 
   const onLoad = useCallback((map) => {
     const bounds = new window.google.maps.LatLngBounds(center);
@@ -92,7 +121,7 @@ export default function HeatMap() {
       onLoad={() => console.log('Google Maps API Loaded')}
       onError={() => console.error('Error loading Google Maps API')}
     >
-      <div className='grid grid-cols-2'>
+      <div className='grid grid-cols-1 lg:grid-cols-2'>
         <div>
           <h1 className='text-4xl font-bold text-gray-800 mb-8 text-center'>
             Self Reported Dengue Cases Heatmap
@@ -112,15 +141,9 @@ export default function HeatMap() {
                 streetViewControl: false,
               }}
             >
-              {heatmapData.length > 0 && (
+              {heatmapData.length > 0 && window.google && window.google.maps && (
                 <HeatmapLayerF
-                  data={heatmapData.map((point) => {
-                    if (window.google && window.google.maps) {
-                      return new window.google.maps.LatLng(point.lat, point.lng);
-                    }
-                    console.error("google.maps.LatLng is not available");
-                    return null;
-                  })}
+                  data={heatmapData.map((point) => new window.google.maps.LatLng(point.lat, point.lng))}
                   options={{
                     radius: 20,
                     opacity: 0.6,
@@ -131,19 +154,35 @@ export default function HeatMap() {
             </GoogleMap>
           )}
         </div>
-        <div
-          style={{
-            padding: '20px',
-            height: '800px',
-            overflowY: 'auto',
-            overflowX: 'auto',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-          className='rounded-lg'
-        >
-          <canvas ref={wordCloudCanvas} width="500" height="500" />
+        <div>
+          <h1 className='text-4xl font-bold text-gray-800 mb-8 text-center'>
+            Word Cloud of Disease Symptoms
+          </h1>
+          <div
+            style={{
+              padding: '20px',
+              height: '800px',
+              overflowY: 'auto',
+              overflowX: 'auto',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            className='rounded-lg'
+          >
+            <div>
+           <ReactWordcloud words={wordCloudData} size={[600,400]} 
+           options={
+              {
+                rotations: 1,
+                rotationAngles: [0],
+                fontSizes: [20, 60],
+                padding: 5,
+              }
+           }/>
+ 
+            </div>
+         </div>
         </div>
       </div>
     </LoadScript>

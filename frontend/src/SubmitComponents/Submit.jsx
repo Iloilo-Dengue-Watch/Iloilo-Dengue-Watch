@@ -5,13 +5,12 @@ import SignUp from './SignUp';
 import { useAuth } from '../AuthContext.jsx';
 import { FaArrowLeft } from 'react-icons/fa';
 import SelfReportForm from './SelfReportForm.jsx';
-import { CsrfTokenProvider } from '../CrsfTokenContext.jsx';
 import useAuthStatus from '../useAuthStatus';
 
 export default function Submit() {
   const { isAuthenticated, loading } = useAuthStatus();
   const [isSignUp, setIsSignUp] = useState(false);
-    
+  const { isLoggedIn } = useAuth();
   const toggleAuthMode = () => {
     setIsSignUp(!isSignUp);
   };
@@ -28,15 +27,15 @@ export default function Submit() {
         </Link>
       </div>
       {isAuthenticated ? (
-        <MainContent />
+        <MainSubmitContent />
       ) : (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-100 to-blue-300 p-4">
-          <LogIn />
+          {isSignUp ? <SignUp /> : <LogIn />}
           <button
             onClick={toggleAuthMode}
             className="mt-4 text-blue-600 hover:underline"
           >
-            {isSignUp ? 'Already have an account? Log in' : "Don't have an account? Sign up"}
+            {isSignUp ? "Already have an account? Log In" : "Don't have an account? Sign Up"}
           </button>
         </div>
       )}
@@ -44,7 +43,7 @@ export default function Submit() {
   );
 }
 
-function MainContent() {
+export function MainSubmitContent() {
   const { logOut } = useAuth();
 
   return (

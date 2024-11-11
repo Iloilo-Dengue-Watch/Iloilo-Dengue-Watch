@@ -32,13 +32,21 @@ export default function WeatherDengue({ content }) {
                     Weather and Dengue Information <br></br>Summary Today
                 </h1>
             </div>
-
+            <div className="lg:hidden">
+                <p
+                    className="text-black lg:text-lg leading-relaxed w-full"
+                    dangerouslySetInnerHTML={{ __html: content }}
+                    id="chat-summary-content"
+                />
+            </div>
             {content ? (
+                <div className="lg:block md:hidden">
                 <p
                     className="text-black lg:text-lg leading-relaxed w-full"
                     dangerouslySetInnerHTML={{ __html: displayedContent }}
                     id="chat-summary-content"
                 />
+                </div>
             ) : (
                 <div className="flex items-center justify-center">
                     <ClipLoader />
@@ -46,7 +54,7 @@ export default function WeatherDengue({ content }) {
             )}
 
             {isTyping && (
-                <div className="text-center mt-4 text-gray-600 italic text-sm">
+                <div className="text-center mt-4 text-gray-600 italic text-sm hidden lg:block">
                     Loading updates...
                 </div>
             )}

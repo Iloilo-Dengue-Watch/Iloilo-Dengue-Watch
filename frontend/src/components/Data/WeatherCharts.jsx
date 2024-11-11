@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import ApexCharts from 'react-apexcharts';
 import { ClipLoader } from 'react-spinners';
 import "./asset.css";
@@ -46,26 +46,26 @@ export default function WeatherCharts({ data }) {
 }
 
 function WeatherChartCard({ title, color, data }) {
-  const chartOptions = {
+  const chartOptions = useMemo(() => ({
     chart: {
       type: 'area',
       toolbar: { show: false },
       zoom: { enabled: false },
     },
-    stroke: { curve: 'smooth', width: 2 },
+    stroke: { curve: 'smooth', width: 3 }, // Increased width and smooth curve
     xaxis: { type: 'category' },
     yaxis: { title: { text: title } },
     tooltip: { theme: 'light' },
     colors: [color],
-  };
+  }), [title, color]);
 
-  const series = [{ name: title, data }];
+  const series = useMemo(() => [{ name: title, data }], [title, data]);
 
   return (
-    <div className="flex flex-col items-center justify-center rounded-lg shadow-lg bg-cyan-800 bg-opacity-40 p-4" style={{ height: '400px', width: '100%' }}>
+    <div className="weather-chart-card h-full w-full">
       <h2 className="text-2xl font-semibold text-white mb-4">{title}</h2>
       {data.length > 0 ? (
-        <ApexCharts options={chartOptions} series={series} type="line" height="90%" width="100%" />
+        <ApexCharts options={chartOptions} series={series} type="line" height="90%" width="120%" />
       ) : (
         <ClipLoader color="#fff" loading={true} size={50} />
       )}

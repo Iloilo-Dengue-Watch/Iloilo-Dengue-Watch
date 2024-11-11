@@ -102,7 +102,7 @@ const SelfReportForm = () => {
       };
 
       // Send the data to your Django backend API
-      const response = await axios.post('http://127.0.0.1:8000/users/self-report/', formData, {
+      const response = await axios.post('https://dengue-watch-backend-f59b9593b035.herokuapp.com/users/self-report/', formData, {
         headers: {
           'Content-Type': 'application/json',
           'X-CSRFToken': csrfToken,

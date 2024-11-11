@@ -21,6 +21,7 @@ export function AuthProvider({ children }) {
       if (response.status === 200) {
         setIsLoggedIn(false);
         console.log('Logged out successfully');
+        window.location.reload();
       }
     } catch (error) {
       console.error('Error logging out:', error);

@@ -8,7 +8,7 @@ import Home from "./components/Home/Home.jsx";
 import GeneralInfo from "./components/GenInfo/GeneralInfo.jsx";
 import Navbar from "./components/Home/Navbar.jsx";
 import PlayGround from './components/Playground/PlayGround.jsx';
-import Submit from "./SubmitComponents/Submit.jsx";
+import Submit, {MainSubmitContent} from "./SubmitComponents/Submit.jsx";
 import Contribute from "./components/Contribute/Contribute.jsx";
 import SIR from './components/Playground/SIR.jsx';
 import SignUp from './SubmitComponents/SignUp.jsx';
@@ -45,6 +45,7 @@ function MainContent({ isVisible, handleTabChange, handleWebsiteChange }) {
                 <Route path="/submit/*" element={<Submit />} />
                 <Route path="/playground/sir" element={<SIR />} />
                 <Route path="/submit/signup" element={<SignUp />} />
+                <Route path="/submit/login" element={<LogIn />} />
             </Routes>
         </div>
     );
@@ -110,4 +111,19 @@ export default function App() {
             </div>
         </Router>
     );
+}
+
+export function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
 }

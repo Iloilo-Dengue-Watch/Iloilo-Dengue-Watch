@@ -15,6 +15,7 @@ const useAuthStatus = () => {
           withCredentials: true,
         });
         setIsAuthenticated(response.data.isAuthenticated);
+        console.log('Auth status checked:', response.data.isAuthenticated);
       } catch (error) {
         console.error('Error checking auth status:', error);
         setIsAuthenticated(false);
@@ -23,7 +24,6 @@ const useAuthStatus = () => {
       }
     };
 
-    // Check auth status on component mount and whenever `isLoggedIn` changes
     checkAuthStatus();
   }, [isLoggedIn]);
 

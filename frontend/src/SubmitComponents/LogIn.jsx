@@ -36,7 +36,15 @@ export default function LogIn() {
 
       const data = await response.json();
       console.log('Login successful:', data);
-      logIn(); // Call logIn to update the authentication state
+      const loginState = await logIn(); // Call logIn to update the authentication state
+      if (loginState) {
+        // Redirect to dashboard or homepage
+        window.location.reload()
+      }
+       else {
+        console.log('Login failed');
+        window.location.reload();
+      }
     } catch (error) {
       setError(error.message);
     }
