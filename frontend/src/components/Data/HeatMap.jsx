@@ -1,7 +1,8 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { GoogleMap, HeatmapLayerF, LoadScript } from '@react-google-maps/api';
-import WordCloud from 'wordcloud';
 import ReactWordcloud from 'react-wordcloud';
+import ApexCharts from 'react-apexcharts';
+
 const containerStyle = {
   width: '100%',
   height: '800px',
@@ -16,78 +17,39 @@ const libraries = ['visualization'];
 
 export default function HeatMap() {
   const [heatmapData, setHeatmapData] = useState([]);
-  const [loading, setLoading] = useState(true); // Add loading state
-  const wordCloudCanvas = useRef(null);
+  const [loading, setLoading] = useState(true);
   const [map, setMap] = useState(null);
-  const wordCloudData = [
-    { text: 'Fever', value: 30 },
-    { text: 'Headache', value: 25 },
-    { text: 'Pain Behind Eyes', value: 22 },
-    { text: 'Nausea', value: 20 },
-    { text: 'Vomiting', value: 20 },
-    { text: 'Muscle Pain', value: 18 },
-    { text: 'Joint Pain', value: 18 },
-    { text: 'Rash', value: 17 },
-    { text: 'Fatigue', value: 15 },
-    { text: 'Weakness', value: 15 },
-    { text: 'Abdominal Pain', value: 14 },
-    { text: 'Bleeding', value: 12 },
-    { text: 'Diarrhea', value: 10 },
-    { text: 'Skin Sensitivity', value: 10 },
-    { text: 'Low Platelet Count', value: 10 },
-    { text: 'Swollen Glands', value: 9 },
-    { text: 'Severe Pain', value: 9 },
-    { text: 'Chills', value: 8 },
-    { text: 'Rash', value: 7 },
-    { text: 'Dengue Fever', value: 7 },
-    { text: 'Shock', value: 6 },
-    { text: 'Dizziness', value: 6 },
-    { text: 'Red Eyes', value: 5 },
-    { text: 'Muscle Spasms', value: 5 },
-    { text: 'Severe Fatigue', value: 5 },
-    { text: 'Shortness of Breath', value: 5 },
-    { text: 'Loss of Appetite', value: 5 },
-  ];
+  const [wordCloudData, setWordCloudData] = useState([]);
+  const [temperatureData, setTemperatureData] = useState([]); 
+  const [selectedPlot, setSelectedPlot] = useState('wordCloud'); 
+
   useEffect(() => {
-    // Fetch heatmap data
     fetch(`https://dengue-watch-backend-f59b9593b035.herokuapp.com/users/self-report/get`)
       .then((response) => response.json())
       .then((data) => {
-        const heatmapData = data.reports.map((item) => ({
+        const fetchedHeatmapData = data.reports.map((item) => ({
           lat: parseFloat(item.lat),
           lng: parseFloat(item.lng),
         }));
-        console.log("Heatmap Data:", heatmapData);
-        setHeatmapData(heatmapData);
-        setLoading(false); // Set loading to false once data is fetched
+        const wordCloudData = Object.entries(data.symptom_count).map(([word, count]) => ({
+          text: word,
+          value: count,
+        }));
+        const temperatureData = data.reports.map((item) => ({
+          date: item.date,
+          temperature: parseFloat(item.temperature),
+        }));
+        setHeatmapData(fetchedHeatmapData);
+        setWordCloudData(wordCloudData);
+        setTemperatureData(temperatureData);
       })
       .catch((error) => {
-        console.error("Error fetching heatmap data:", error);
-        setLoading(false); // Set loading to false in case of error
+        console.error("Error fetching data:", error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
-
-  useEffect(() => {
-    // Word cloud data
-    const wordCloudData = [
-      { text: 'Fever', value: 30 },
-      { text: 'Headache', value: 25 },
-      { text: 'Pain Behind Eyes', value: 22 },
-      { text: 'Nausea', value: 20 },
-    ];
-
-    // Initialize WordCloud only when canvas and window.WordCloud are available
-    if (wordCloudCanvas.current && typeof window !== 'undefined' && window.WordCloud) {
-      WordCloud(wordCloudCanvas.current, {
-        list: wordCloudData.map(item => [item.text, item.weight]),
-        gridSize: 10,
-        weightFactor: 5,
-        fontFamily: 'Times, serif',
-        color: 'random-dark',
-        minSize: 12,
-      });
-    }
-  }, [wordCloudCanvas.current]); // Add wordCloudCanvas.current as a dependency
 
   const onLoad = useCallback((map) => {
     const bounds = new window.google.maps.LatLngBounds(center);
@@ -99,20 +61,127 @@ export default function HeatMap() {
     setMap(null);
   }, []);
 
-  useEffect(() => {
-    if (map) {
-      // Set zoom level after the map has been loaded
-      const timeoutId = setTimeout(() => {
-        if (map) {
-          console.log('Setting zoom level to 5');
-          map.setZoom(5);
-        }
-      }, 2000); // Delay for 2 seconds
-
-      // Cleanup timeout if map is unmounted
-      return () => clearTimeout(timeoutId);
+  const renderPlot = () => {
+    if (selectedPlot === 'symptom') {
+      return (
+        <ReactWordcloud
+          words={wordCloudData}
+          size={[600, 400]}
+          options={{
+            rotations: 1,
+            rotationAngles: [0],
+            fontSizes: [20, 60],
+            padding: 5,
+          }}
+        />
+      );
+    } else if (selectedPlot === 'temperature') {
+      return (
+        <ApexCharts
+          options={{
+            chart: {
+              type: 'line',
+              height: 400,
+            },
+            xaxis: {
+              type: 'datetime',
+              categories: temperatureData.map((item) => item.date),
+            },
+            yaxis: {
+              title: {
+                text: 'Temperature (°C)',
+              },
+            },
+            title: {
+              text: 'Temperature over Time',
+              align: 'center',
+            },
+          }}
+          series={[
+            {
+              name: 'Temperature',
+              data: temperatureData.map((item) => item.temperature),
+            },
+          ]}
+          type="line"
+          height={400}
+          width={600}
+        />
+      );
+    } else if (selectedPlot === 'barplot') {
+      return (
+        <ApexCharts
+          options={{
+            chart: {
+              type: 'bar',
+              height: 400,
+            },
+            xaxis: {
+              categories: wordCloudData.map((item) => item.text),
+            },
+            title: {
+              text: 'Symptoms Frequency',
+              align: 'center',
+            },
+          }}
+          series={[
+            {
+              name: 'Count',
+              data: wordCloudData.map((item) => item.value),
+            },
+          ]}
+          type="bar"
+          height={400}
+          width={600}
+        />
+      );
+    } else if (selectedPlot === 'histogram') {
+      return (
+        <ApexCharts
+          options={{
+            chart: {
+              type: 'histogram',
+              height: 400,
+            },
+            xaxis: {
+              title: { text: 'Symptoms' },
+              categories: wordCloudData.map((item) => item.value),
+            },
+            title: {
+              text: 'Symptoms Histogram',
+              align: 'center',
+            },
+          }}
+          series={[
+            {
+              name: 'Frequency',
+              data: wordCloudData.map((item) => item.value),
+            },
+          ]}
+          type="histogram"
+          height={400}
+          width={600}
+        />
+      );
+    } else if (selectedPlot === 'piechart') {
+      return (
+        <ApexCharts
+          options={{
+            labels: wordCloudData.map((item) => item.text),
+            title: {
+              text: 'Symptoms Distribution',
+              align: 'center',
+            },
+          }}
+          series={wordCloudData.map((item) => item.value)}
+          type="pie"
+          height={400}
+          width={600}
+        />
+      );
     }
-  }, [map]);
+    return null;
+  };
 
   return (
     <LoadScript
@@ -128,13 +197,13 @@ export default function HeatMap() {
           </h1>
           {loading ? (
             <div className="text-center">
-              <p>Loading data...</p> {/* Loading message or spinner */}
+              <p>Loading data...</p>
             </div>
           ) : (
             <GoogleMap
               mapContainerStyle={containerStyle}
               center={center}
-              zoom={2} // Initial zoom level before map loads
+              zoom={2}
               onLoad={onLoad}
               onUnmount={onUnmount}
               options={{
@@ -156,8 +225,21 @@ export default function HeatMap() {
         </div>
         <div>
           <h1 className='text-4xl font-bold text-gray-800 mb-8 text-center'>
-            Word Cloud of Disease Symptoms
+            {selectedPlot.charAt(0).toUpperCase() + selectedPlot.slice(1)} Plot
           </h1>
+          <div className="text-center mb-4">
+            {['symptom', 'temperature', 'barplot', 'histogram', 'piechart'].map((plot) => (
+              <button
+                key={plot}
+                className={`px-4 py-2 mr-2 ${
+                  selectedPlot === plot ? 'bg-blue-500 text-white' : 'bg-gray-300'
+                }`}
+                onClick={() => setSelectedPlot(plot)}
+              >
+                {plot.charAt(0).toUpperCase() + plot.slice(1)}
+              </button>
+            ))}
+          </div>
           <div
             style={{
               padding: '20px',
@@ -170,19 +252,8 @@ export default function HeatMap() {
             }}
             className='rounded-lg'
           >
-            <div>
-           <ReactWordcloud words={wordCloudData} size={[600,400]} 
-           options={
-              {
-                rotations: 1,
-                rotationAngles: [0],
-                fontSizes: [20, 60],
-                padding: 5,
-              }
-           }/>
- 
-            </div>
-         </div>
+            {renderPlot()}
+          </div>
         </div>
       </div>
     </LoadScript>

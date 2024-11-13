@@ -14,6 +14,7 @@ import SIR from './components/Playground/SIR.jsx';
 import SignUp from './SubmitComponents/SignUp.jsx';
 import LogIn from './SubmitComponents/LogIn.jsx';
 import { useCsrfToken } from './CrsfTokenContext.jsx';
+import MosquitoSightings from './SubmitComponents/MosquitoSightings.jsx';
 function MainContent({ isVisible, handleTabChange, handleWebsiteChange }) {
     const location = useLocation();
 
@@ -46,6 +47,7 @@ function MainContent({ isVisible, handleTabChange, handleWebsiteChange }) {
                 <Route path="/playground/sir" element={<SIR />} />
                 <Route path="/submit/signup" element={<SignUp />} />
                 <Route path="/submit/login" element={<LogIn />} />
+                <Route path="/submit/mosquito-sightings" element={<MosquitoSightings />} />
             </Routes>
         </div>
     );

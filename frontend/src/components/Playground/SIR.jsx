@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
 import { Link } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa'; // Importing the arrow icon from react-icons
+import axios from 'axios';
 
 export default function SIR() {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [question, setQuestion] = useState('');
+    const [chatResponse, setChatResponse] = useState('');
 
     const [params, setParams] = useState({
         beta_h: 0.3,
@@ -58,6 +61,25 @@ export default function SIR() {
         e.preventDefault();
         fetchData();
     };
+
+    const handleQuestionSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            // Convert data to a JSON string to pass it as a query parameter
+            const response = await axios.get('http://127.0.0.1:8000/playground/sir/explanation/', {
+                params: {
+                    question,
+                    params: JSON.stringify(params), // Send data as a JSON string in the query
+                }
+            });
+            console.log(response.data.response);
+            setChatResponse(response.data.response);
+        } catch (error) {
+            console.error('Error fetching response from backend:', error);
+            setChatResponse('Error fetching response from the server.');
+        }
+    };
+    
 
     const tooltipDescriptions = {
         beta_h: 'The transmission rate of the disease from mosquitoes to humans.',
@@ -133,7 +155,6 @@ export default function SIR() {
                                     curve: 'smooth',
                                     width: 2,
                                     lineCap: 'round',
-                                    //colors: ['#F44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4'],
                                     dashArray: [8, 0, 0, 8, 0, 0, 0]  // Dashed line for susceptible human and mosquito
                                 },
                                 xaxis: {
@@ -185,6 +206,35 @@ export default function SIR() {
                     </div>
                 )}
             </div>
+
+            {data && (
+                <div className="mt-8 p-4 bg-white rounded shadow-md grid grid-cols-1 lg:grid-cols-2">
+                    <div>
+                    <h2 className="text-lg font-semibold text-center mb-4">Ask ChatGPT About the Results</h2>
+                    <form onSubmit={handleQuestionSubmit} className="flex flex-col items-center">
+                        <textarea
+                            value={question}
+                            onChange={(e) => setQuestion(e.target.value)}
+                            rows="4"
+                            className="w-full p-2 border rounded-md mb-4"
+                            placeholder="Ask a question about the simulation results..."
+                        />
+                        <button 
+                            type="submit" 
+                            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition"
+                        >
+                            Ask ChatGPT
+                        </button>
+                    </form>
+                    </div>
+                    {chatResponse && (
+                        <div className="mt-4 p-4 bg-gray-100 rounded-md">
+                            <h3 className="text-md font-semibold">ChatGPT Response:</h3>
+                            <p>{chatResponse}</p>
+                        </div>
+                    )}
+                </div>
+            )}
         </div>
     );
 }
