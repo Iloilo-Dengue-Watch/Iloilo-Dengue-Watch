@@ -8,7 +8,7 @@ import {MovingComponent} from 'react-moving-text';
 const teamMembers = [
     {
         name: 'Miguel Angelo Bondad',
-        position: 'Web Developer | Mathematical Modeling',
+        position: 'Mathematical Modeling',
         school: 'University of the Philippines - Diliman',
         description: 'I am currently an undergraduate student at the University of the Philippines Diliman. I am working in the System Modeling and Simulation Laboratory for my thesis, with the topic of Environmental Surveillance. I am interested in the application of AI techniques, particularly using models to analyze data and gain insights, as well as exploring how machine learning and simulation can be leveraged in practical, data-driven environments.',
         image: '/Miguel.jpg'

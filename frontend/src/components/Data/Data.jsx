@@ -1,4 +1,4 @@
-import {WeatherCardHeader, WeatherCardComponents} from './WeatherCard';
+import WeatherCard from './WeatherCard';
 import Forecast from './plots/Forecast';
 import Warning from './plots/Warning';
 import Table from '@mui/material/Table';
@@ -51,11 +51,10 @@ function Data({handleTabChange}) {
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-100 to-blue-300 py-8 p-4 lg:px-10 mt-3">
       <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center lg:!text-left sticky">Dengue Data Dashboard</h1>
-          <WeatherCardHeader />
+          <WeatherCard />
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-10">
             <Forecast />
             <div className="flex flex-col justify-between h-full !w-full">
-              <WeatherCardComponents />
               <WeatherDengue content={GPT_response} />
             </div>
           </div>

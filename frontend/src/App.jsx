@@ -15,6 +15,7 @@ import SignUp from './SubmitComponents/SignUp.jsx';
 import LogIn from './SubmitComponents/LogIn.jsx';
 import { useCsrfToken } from './CrsfTokenContext.jsx';
 import MosquitoSightings from './SubmitComponents/MosquitoSightings.jsx';
+import SelfReportForm from './SubmitComponents/SelfReportForm.jsx';
 function MainContent({ isVisible, handleTabChange, handleWebsiteChange }) {
     const location = useLocation();
 
@@ -48,6 +49,7 @@ function MainContent({ isVisible, handleTabChange, handleWebsiteChange }) {
                 <Route path="/submit/signup" element={<SignUp />} />
                 <Route path="/submit/login" element={<LogIn />} />
                 <Route path="/submit/mosquito-sightings" element={<MosquitoSightings />} />
+                <Route path="/submit/self-report" element={<SelfReportForm />} />
             </Routes>
         </div>
     );
@@ -75,7 +77,7 @@ export default function App() {
   useEffect(() => {
     const fetchCsrfToken = async () => {
       try {
-        const response = await fetch('https://dengue-watch-backend-f59b9593b035.herokuapp.com/users/get-csrf-token/', {
+        const response = await fetch(`${import.meta.env.VITE_REACT_APP_PROD_URL}/users/get-csrf-token/`, {
           credentials: 'include', // Ensures cookies are included in requests
         });
         const data = await response.json();

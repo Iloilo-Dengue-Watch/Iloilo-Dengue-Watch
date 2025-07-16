@@ -25,7 +25,7 @@ export default function WeatherDengue({ content }) {
     }, [content]);
 
     return (
-        <div className="bg-white bg-opacity-80 p-8 rounded-lg shadow-md border border-gray-200 mx-auto !w-full" id="chat-summary">
+        <div className="bg-white bg-opacity-80 p-8 rounded-lg shadow-md border border-gray-200 mx-auto !w-full h-full" id="chat-summary">
             <div className="flex items-center justify-center mb-4">
                 <img src='https://img.icons8.com/?size=512&id=TUk7vxvtu6hX&format=png' alt="ChatGPT Logo" className="w-12 h-12 mr-4" /> {/* ChatGPT image */}
                 <h1 className="text-2xl font-bold text-gray-900 text-center">
@@ -64,7 +64,7 @@ export default function WeatherDengue({ content }) {
                 <p className="text-base">
                     For more detailed news and article references, visit our
                     <Link to="/news" className="text-blue-600 underline ml-1 font-semibold hover:text-blue-800 transition-colors">
-                        News Section``
+                        News Section
                     </Link>.
                 </p>
             </div>

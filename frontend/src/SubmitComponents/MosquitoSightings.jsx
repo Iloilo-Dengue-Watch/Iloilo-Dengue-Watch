@@ -24,7 +24,7 @@ const MosquitoSightings = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const mapRef = useRef(null);
-
+  const [others, setOthers] = useState('');
   const handleAddressChange = async (address) => {
     setAddress(address);
     await geocodeAddress(address);
@@ -156,8 +156,21 @@ const MosquitoSightings = () => {
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
             />
           </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700" htmlFor="is_positive">
+              Any other related information we should know?
+            </label>
+            <textarea
+    id="others"
+    value={others}
+    onChange={(e) => setOthers(e.target.value)}
+    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+    rows="4" // Adjust the number of rows as needed
+    required
+  />
+          </div>
         </div>
-
+        
         <div>
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700" htmlFor="address">

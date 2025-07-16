@@ -53,9 +53,9 @@ export default function NewsCard({ title, summary, link, source, image, pub_date
             />
             <CardMedia
                 component="img"
-                height="194"
                 image={image}
                 alt={title}
+                className='!h-60'
             />
             <CardContent>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>

@@ -8,10 +8,10 @@ function JumbotronHome() {
                     className="bg-center bg-no-repeat bg-[url('https://static.scientificamerican.com/sciam/cache/file/87033586-8B8D-4E17-8DA97BF7FD3AE633_source.jpg')] bg-gray-700 bg-blend-multiply h-[80vh]">
                     <div className="px-4 mx-auto max-w-screen-xl text-center h-full flex flex-col justify-center">
                         <h1 className="mb-4 text-3xl font-extrabold tracking-tight leading-none text-white md:text-4xl lg:text-5xl">
-                            Iloilo City Dengue Watch Project
+                            Iloilo Dengue Watch Project
                         </h1>
                         <p className="mb-8 text-base font-normal text-gray-300 lg:text-lg sm:px-8 lg:px-16">
-                            An AI4GHI Challenge Project Submission.
+                            A website for Iloilo, for the people of Iloilo.
                         </p>
                         <div className="flex flex-col space-y-4 lg:flex-row lg:justify-center lg:space-y-0 lg:space-x-4 p-10">
                             <a href="/general-information"

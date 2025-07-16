@@ -36,7 +36,9 @@ const SelfReportForm = () => {
   const [lat, setLat] = useState(initialCenter.lat);
   const [lng, setLng] = useState(initialCenter.lng);
   const [symptoms, setSymptoms] = useState([]);
+  const [additionalSymptoms, setAdditionalSymptoms] = useState([]);
   const [error, setError] = useState('');
+  const [others, setOthers] = useState('');
   const mapRef = useRef(null);
   const { csrfToken } = useCsrfToken();
 
@@ -98,7 +100,7 @@ const SelfReportForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!date || !temperature || !lat || !lng || symptoms.length === 0) {
+    if (!date || !lat || !lng || symptoms.length === 0) {
       setError('Please fill in all fields.');
       return;
     }
@@ -139,6 +141,7 @@ const SelfReportForm = () => {
       <h2 className="text-2xl font-bold mb-4">Self Report Form</h2>
       <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         <div>
+          <div className='grid grid-cols-2 gap-2'>
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700" htmlFor="date">
               Date
@@ -170,24 +173,50 @@ const SelfReportForm = () => {
               required
             />
           </div>
+          </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">Symptoms</label>
-            <div className="grid grid-cols-2 gap-2 mt-2">
-              {symptomOptions.map((symptom) => (
-                <div key={symptom} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={symptoms.includes(symptom)}
-                    onChange={() => handleSymptomChange(symptom)}
-                    className="mr-2"
-                  />
-                  <label className="text-sm text-gray-700">{symptom}</label>
-                </div>
-              ))}
-            </div>
+  <label className="block text-sm font-medium text-gray-700">Symptoms</label>
+  <div className="grid grid-cols-2 gap-2 mt-2">
+    {symptomOptions.map((symptom) => (
+      <label key={symptom} className="flex items-center cursor-pointer">
+        <input
+          type="checkbox"
+          checked={symptoms.includes(symptom)}
+          onChange={() => handleSymptomChange(symptom)}
+          className="mr-2"
+        />
+        <span className="text-sm text-gray-700">{symptom}</span>
+      </label>
+    ))}
+  </div>
+</div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700" htmlFor="is_positive">
+              Other symptoms (if any, split by comma &apos;, &apos;)
+            </label>
+            <input
+              type="text"
+              id="others"
+              value={additionalSymptoms}
+              onChange={(e) => setOthers(e.target.value)}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+              required
+            />
           </div>
-          
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700" htmlFor="is_positive">
+              Any other related information we should know?
+            </label>
+            <textarea
+    id="others"
+    value={others}
+    onChange={(e) => setOthers(e.target.value)}
+    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
+    rows="4" // Adjust the number of rows as needed
+    required
+  />
+          </div>
           <div className="mb-4 flex items-center">
             <input
               type="checkbox"
@@ -238,6 +267,14 @@ const SelfReportForm = () => {
                 {lat && lng && <Marker position={{ lat, lng }} />}
               </GoogleMap>
             </LoadScript>
+            <div>
+              <p className="text-sm text-gray-500 italic mt-2 text-center">
+                  You have full control if you want to submit this information to health institutions.
+              </p>
+              <p className="text-sm text-gray-700 mt-2 text-justify">
+                  By submitting this form, you agree to the collection and processing of your personal data as described in our <a href="/privacy-policy" className="text-blue-600">Privacy Policy</a>.
+              </p>
+            </div>
           </div>
         </div>
       </form>

@@ -150,7 +150,7 @@ export default function SignUp() {
         <form className="md:col-span-2 !w-full py-6 px-6 sm:px-16" onSubmit={handleSubmit}>
           <div className="mb-6">
             <h3 className="text-gray-800 text-2xl font-bold">Create an account</h3>
-            <p className="text-sm mt-4 text-gray-800 text-center"> Already have an account? <span className="text-blue-600 font-semibold hover:underline">Log in</span></p>
+            <p className="text-sm mt-4 text-gray-800 text-center"> Already have an account? <span className="text-blue-600 font-semibold hover:underline"><a href='/submit/login'>Log in</a></span></p>
           </div>
 
           <div className="space-y-6">

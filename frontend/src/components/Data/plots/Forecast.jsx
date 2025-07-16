@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { Grid, Box, Card, CardContent, Typography, Modal, CircularProgress } from '@mui/material';
 
 export default function Forecast() {
-    const imageURL = "https://dengue-watch-backend-f59b9593b035.herokuapp.com/ml/forecast/?image=forecast";
-    const predictionURL = "https://dengue-watch-backend-f59b9593b035.herokuapp.com/ml/forecast/?data=prediction";
+    const imageURL = `${import.meta.env.VITE_REACT_APP_PROD_URL}/ml/forecast/?image=forecast`;
+    const predictionURL = `${import.meta.env.VITE_REACT_APP_PROD_URL}/ml/forecast/?data=prediction`;
     
     const [imgForecast, setImgForecast] = useState(null);
     const [prediction, setPrediction] = useState([]);
